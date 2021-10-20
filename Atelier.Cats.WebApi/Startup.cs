@@ -26,8 +26,6 @@ namespace Atelier.Cats.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atelier.Cats.WebApi", Version = "v1" });
             });
 
-            services.AddLogging();
-
             InjectCustomServices(services);
         }
 
