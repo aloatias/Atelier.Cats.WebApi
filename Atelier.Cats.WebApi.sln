@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atelier.Cats.WebApi", "Atelier.Cats.WebApi\Atelier.Cats.WebApi.csproj", "{03BF8B27-2CBD-447F-8160-B5170DAA8943}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atelier.Cats.WebApi", "Atelier.Cats.WebApi\Atelier.Cats.WebApi.csproj", "{03BF8B27-2CBD-447F-8160-B5170DAA8943}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atelier.Cats.DataAccess.Entities", "Atelier.Cats.DataAccess.Entities\Atelier.Cats.DataAccess.Entities.csproj", "{6D21B772-155B-40A2-A24B-3332B11D3037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atelier.Cats.DataAccess.Entities", "Atelier.Cats.DataAccess.Entities\Atelier.Cats.DataAccess.Entities.csproj", "{6D21B772-155B-40A2-A24B-3332B11D3037}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atelier.Cats.DataAccess", "Atelier.Cats.DataAccess\Atelier.Cats.DataAccess.csproj", "{CD5D183F-C607-4018-B27B-3AB08C77A0AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atelier.Cats.DataAccess", "Atelier.Cats.DataAccess\Atelier.Cats.DataAccess.csproj", "{CD5D183F-C607-4018-B27B-3AB08C77A0AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
