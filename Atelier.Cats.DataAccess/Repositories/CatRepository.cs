@@ -24,12 +24,12 @@ namespace Atelier.Cats.DataAccess.Repositories
             while (true)
             {
                 firstContender = await EntitySet
-                .OrderBy(x => new Guid())
+                .OrderBy(x => Guid.NewGuid())
                 .FirstOrDefaultAsync();
 
                 secondContender = await EntitySet
                     .Where(x => x.Id != firstContender.Id)
-                    .OrderBy(x => new Guid())
+                    .OrderBy(x => Guid.NewGuid())
                     .FirstOrDefaultAsync();
 
                 bool existingChallenge = await _context
