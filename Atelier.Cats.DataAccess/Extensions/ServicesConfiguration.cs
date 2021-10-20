@@ -27,7 +27,7 @@ namespace Atelier.Cats.DataAccess.Extensions
             services.AddScoped<IDateGenerator, DateGenerator>();
         }
 
-        public static void InjectRepositoryService(this IServiceCollection services)
+        public static void InjectRepositoryServices(this IServiceCollection services)
         {
             services.AddScoped<ICatRepository, CatRepository>();
             services.AddScoped<IChallengeRepository, ChallengeRepository>();

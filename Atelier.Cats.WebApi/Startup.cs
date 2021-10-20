@@ -57,7 +57,7 @@ namespace Atelier.Cats.WebApi
         {
             ServicesConfiguration.InjectDataService(services);
             ServicesConfiguration.InjectDateService(services);
-            ServicesConfiguration.InjectRepositoryService(services);
+            ServicesConfiguration.InjectRepositoryServices(services);
             ServicesConfiguration.InjectUnitOfWorkService(services);
         }
     }
