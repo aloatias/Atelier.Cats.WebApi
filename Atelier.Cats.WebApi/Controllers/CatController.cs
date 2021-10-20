@@ -17,7 +17,7 @@ namespace Atelier.Cats.WebApi.Controllers
 
         [Route("GetContenders")]
         [HttpGet]
-        public async Task GetCatContendersAsync()
+        public async Task GetContendersAsync()
         {
             await UnitOfWork.CatRepository.GetContendersAsync();
         }
