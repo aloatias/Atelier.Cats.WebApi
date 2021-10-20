@@ -54,7 +54,9 @@ namespace Atelier.Cats.WebApi
         private void InjectCustomServices(IServiceCollection services)
         {
             // Data service
-            DataService.Inject(services);
+            Services.InjectDataService(services);
+            Services.InjectRepositoryService(services);
+            Services.InjectUnitOfWorkService(services);
         }
     }
 }
