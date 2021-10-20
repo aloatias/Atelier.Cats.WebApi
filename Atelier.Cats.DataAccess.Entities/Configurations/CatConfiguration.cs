@@ -16,7 +16,8 @@ namespace Atelier.Cats.DataAccess.Entities.Configurations
 
             // Cat properties
             builder.Property(x => x.Url);
-            builder.Property(x => x.Creation).IsRequired();
+            builder.Property(x => x.CreationDate).IsRequired();
+            builder.Property(x => x.LastUpdate).IsRequired();
         }
     }
 }

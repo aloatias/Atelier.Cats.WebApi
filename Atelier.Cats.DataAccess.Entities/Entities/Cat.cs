@@ -6,6 +6,7 @@ namespace Atelier.Cats.DataAccess.Entities
     {
         public string AtelierId { get; set; }
         public string Url { get; set; }
-        public DateTime Creation { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime LastUpdate { get; set; }
     }
 }

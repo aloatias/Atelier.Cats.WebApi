@@ -10,47 +10,47 @@ namespace Atelier.Cats.DataAccess.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : AtelierEntityBase
     {
-        private readonly DbSet<TEntity> _entitySet;
+        protected DbSet<TEntity> EntitySet { get; private set; }
 
         public GenericRepository(AtelierCatsContext atelierCatsContext)
         {
-            _entitySet = atelierCatsContext.Set<TEntity>();
+            EntitySet = atelierCatsContext.Set<TEntity>();
         }
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
-            return (await _entitySet.AddAsync(entity)).Entity;
+            return (await EntitySet.AddAsync(entity)).Entity;
         }
 
         public async Task AddAsync(IEnumerable<TEntity> entities)
         {
-            await _entitySet.AddRangeAsync(entities);
+            await EntitySet.AddRangeAsync(entities);
         }
 
         public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> criteria)
         {
-            return await _entitySet.AnyAsync(criteria);
+            return await EntitySet.AnyAsync(criteria);
         }
 
         public async Task Remove(Guid id)
         {
-            var entity = await _entitySet.FindAsync(id);
-            _entitySet.Remove(entity);
+            var entity = await EntitySet.FindAsync(id);
+            EntitySet.Remove(entity);
         }
 
         public void Remove(TEntity entity)
         {
-            _entitySet.Remove(entity);
+            EntitySet.Remove(entity);
         }
 
         public void Remove(IEnumerable<TEntity> entities)
         {
-            _entitySet.RemoveRange(entities);
+            EntitySet.RemoveRange(entities);
         }
 
         public TEntity UpdateAsync(TEntity entity)
         {
-            return (_entitySet.Update(entity)).Entity;
+            return (EntitySet.Update(entity)).Entity;
         }
 
         public void UpdateAsync(IEnumerable<TEntity> entities, IDictionary<string, object> parameters = null)

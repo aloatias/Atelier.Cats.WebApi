@@ -16,6 +16,8 @@ namespace Atelier.Cats.DataAccess.Entities.Configurations
             builder.HasAlternateKey(x => new { x.ChallengerTwoId, x.ChallengerOneId });
 
             // Challenge properties
+            builder.Property(x => x.VoteDate).IsRequired();
+            
             builder.Property(x => x.ChallengerOneId);
             builder.HasOne(x => x.ChallengerOne);
 
@@ -24,8 +26,6 @@ namespace Atelier.Cats.DataAccess.Entities.Configurations
 
             builder.Property(x => x.WinnerId);
             builder.HasOne(x => x.Winner);
-
-            builder.Property(x => x.VoteDate).IsRequired();
         }
     }
 }

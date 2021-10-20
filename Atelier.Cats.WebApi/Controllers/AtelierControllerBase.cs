@@ -4,13 +4,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Atelier.Cats.WebApi.Controllers
 {
-    public class AtelierControllerBase : ControllerBase
+    public class AtelierControllerBase<TEntity> : ControllerBase
     {
-        protected ILogger Logger { get; private set; }
+        protected ILogger<TEntity> Logger { get; private set; }
         protected IUnitOfWork UnitOfWork { get; private set; }
 
         public AtelierControllerBase(
-            ILogger logger,
+            ILogger<TEntity> logger,
             IUnitOfWork unitOfWork)
         {
             Logger = logger;

@@ -1,10 +1,10 @@
 ﻿using Atelier.Cats.DataAccess.Entities;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Atelier.Cats.DataAccess.Interfaces
 {
     public interface IChallengeRepository : IGenericRepository<Challenge>
     {
-        Task GetResultsAsync();
+        IReadOnlyCollection<Challenge> GetResultsAsync();
     }
 }

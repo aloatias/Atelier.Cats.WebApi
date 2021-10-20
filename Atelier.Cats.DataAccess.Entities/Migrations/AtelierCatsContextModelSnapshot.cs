@@ -29,7 +29,10 @@ namespace Atelier.Cats.DataAccess.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("Creation")
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastUpdate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Url")

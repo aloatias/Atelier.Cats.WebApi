@@ -1,7 +1,7 @@
 ﻿using Atelier.Cats.DataAccess.Entities;
 using Atelier.Cats.DataAccess.Interfaces;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Atelier.Cats.DataAccess.Repositories
 {
@@ -11,7 +11,7 @@ namespace Atelier.Cats.DataAccess.Repositories
         {
         }
 
-        public async Task GetResultsAsync()
+        public IReadOnlyCollection<Challenge> GetResultsAsync()
         {
             throw new NotImplementedException();
         }

@@ -26,6 +26,8 @@ namespace Atelier.Cats.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atelier.Cats.WebApi", Version = "v1" });
             });
 
+            services.AddLogging();
+
             InjectCustomServices(services);
         }
 
@@ -53,8 +55,8 @@ namespace Atelier.Cats.WebApi
 
         private void InjectCustomServices(IServiceCollection services)
         {
-            // Data service
             Services.InjectDataService(services);
+            Services.InjectDateService(services);
             Services.InjectRepositoryService(services);
             Services.InjectUnitOfWorkService(services);
         }
