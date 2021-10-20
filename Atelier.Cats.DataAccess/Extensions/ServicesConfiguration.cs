@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Atelier.Cats.DataAccess.Extensions
 {
-    public static class Services
+    public static class ServicesConfiguration
     {
         public static void InjectDataService(this IServiceCollection services)
         {
