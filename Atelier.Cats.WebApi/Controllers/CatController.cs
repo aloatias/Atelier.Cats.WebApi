@@ -1,5 +1,6 @@
 ﻿using Atelier.Cats.DataAccess.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.WebApi.Controllers
@@ -8,11 +9,13 @@ namespace Atelier.Cats.WebApi.Controllers
     [Route("[controller]")]
     public class CatController : AtelierControllerBase
     {
-        public CatController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public CatController(
+            ILogger logger,
+            IUnitOfWork unitOfWork) : base(logger, unitOfWork)
         {
         }
 
-        [Route("Get")]
+        [Route("GetContenders")]
         [HttpGet]
         public async Task GetCatContendersAsync()
         {

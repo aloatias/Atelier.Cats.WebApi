@@ -2,6 +2,7 @@
 using Atelier.Cats.DataAccess.Interfaces;
 using Atelier.Cats.WebApi.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.WebApi.Controllers
@@ -13,8 +14,9 @@ namespace Atelier.Cats.WebApi.Controllers
         private readonly IDateGenerator _dateGenerator;
 
         public ChallengeControler(
+            ILogger logger,
             IUnitOfWork unitOfWork,
-            IDateGenerator dateGenerator) : base(unitOfWork)
+            IDateGenerator dateGenerator) : base(logger, unitOfWork)
         {
             _dateGenerator = dateGenerator;
         }
