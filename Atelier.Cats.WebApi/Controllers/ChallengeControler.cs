@@ -22,7 +22,7 @@ namespace Atelier.Cats.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task SetChallengersResultAsync(ChallengeResultDto challengeResult)
+        public async Task SetChallengeResultAsync(ChallengeResultDto challengeResult)
         {
             var challenge = new Challenge
             {
@@ -33,6 +33,7 @@ namespace Atelier.Cats.WebApi.Controllers
             };
 
             await UnitOfWork.ChallengeRepository.AddAsync(challenge);
+            await UnitOfWork.CommitAsync();
         }
     }
 }
