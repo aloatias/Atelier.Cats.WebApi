@@ -16,6 +16,11 @@ namespace Atelier.Cats.DataAccess.Repositories
             _context = context;
         }
 
+        public async Task<Cat> FindByAtelierIdAsync(string id)
+        {
+            return await EntitySet.FirstOrDefaultAsync(x => x.AtelierId == id);
+        }
+
         public async Task<Tuple<Cat, Cat>> GetContendersAsync()
         {
             Cat firstContender;

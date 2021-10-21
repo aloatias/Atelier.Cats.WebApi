@@ -9,9 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Atelier.Cats.DataAccess.Extensions
 {
-    public static class ServicesConfiguration
+    public static class DataAccessConfiguration
     {
-        public static void InjectDataService(this IServiceCollection services)
+        public static void InjectServices(IServiceCollection services)
         {
             // Real database
             //services.AddDbContext<AtelierCatsContext>(options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
@@ -20,21 +20,10 @@ namespace Atelier.Cats.DataAccess.Extensions
             services.AddDbContext<AtelierCatsContext>(options => options
                 .UseInMemoryDatabase("AtelierCatsContext")
                 .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
-        }
 
-        public static void InjectDateService(this IServiceCollection services)
-        {
             services.AddScoped<IDateGenerator, DateGenerator>();
-        }
-
-        public static void InjectRepositoryServices(this IServiceCollection services)
-        {
             services.AddScoped<ICatRepository, CatRepository>();
             services.AddScoped<IChallengeRepository, ChallengeRepository>();
-        }
-
-        public static void InjectUnitOfWorkService(this IServiceCollection services)
-        {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }

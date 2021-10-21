@@ -77,21 +77,21 @@ namespace Atelier.Cats.DataAccess.Entities.Migrations
             modelBuilder.Entity("Atelier.Cats.DataAccess.Entities.Challenge", b =>
                 {
                     b.HasOne("Atelier.Cats.DataAccess.Entities.Cat", "ChallengerOne")
-                        .WithMany()
+                        .WithMany("ChallengesAsContenderOne")
                         .HasForeignKey("ChallengerOneId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Atelier.Cats.DataAccess.Entities.Cat", "ChallengerTwo")
-                        .WithMany()
+                        .WithMany("ChallengesAsContenderTwo")
                         .HasForeignKey("ChallengerTwoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Atelier.Cats.DataAccess.Entities.Cat", "Winner")
-                        .WithMany()
+                        .WithMany("ChallengesWinner")
                         .HasForeignKey("WinnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ChallengerOne");
@@ -99,6 +99,15 @@ namespace Atelier.Cats.DataAccess.Entities.Migrations
                     b.Navigation("ChallengerTwo");
 
                     b.Navigation("Winner");
+                });
+
+            modelBuilder.Entity("Atelier.Cats.DataAccess.Entities.Cat", b =>
+                {
+                    b.Navigation("ChallengesAsContenderOne");
+
+                    b.Navigation("ChallengesAsContenderTwo");
+
+                    b.Navigation("ChallengesWinner");
                 });
 #pragma warning restore 612, 618
         }

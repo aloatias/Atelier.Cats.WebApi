@@ -1,4 +1,5 @@
 ﻿using Atelier.Cats.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Atelier.Cats.DataAccess.Interfaces

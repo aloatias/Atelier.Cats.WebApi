@@ -17,15 +17,24 @@ namespace Atelier.Cats.DataAccess.Entities.Configurations
 
             // Challenge properties
             builder.Property(x => x.VoteDate).IsRequired();
-            
+
             builder.Property(x => x.ChallengerOneId);
-            builder.HasOne(x => x.ChallengerOne);
+            builder.HasOne(x => x.ChallengerOne)
+                .WithMany(x => x.ChallengesAsContenderOne)
+                .HasForeignKey(x => x.ChallengerOneId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(x => x.ChallengerTwoId);
-            builder.HasOne(x => x.ChallengerTwo);
+            builder.HasOne(x => x.ChallengerTwo)
+                .WithMany(x => x.ChallengesAsContenderTwo)
+                .HasForeignKey(x => x.ChallengerTwoId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(x => x.WinnerId);
-            builder.HasOne(x => x.Winner);
+            builder.HasOne(x => x.Winner)
+                .WithMany(x => x.ChallengesWinner)
+                .HasForeignKey(x => x.WinnerId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
