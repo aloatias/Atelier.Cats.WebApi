@@ -37,8 +37,9 @@ namespace Atelier.Cats.WebApi.Controllers
             }
         }
 
+        [Route("Add")]
         [HttpPost]
-        public async Task<IActionResult> SetChallengeResultAsync(ChallengeResultDto challengeResult)
+        public async Task<IActionResult> AddAsync(ChosenWinnerDto challengeResult)
         {
             try
             {

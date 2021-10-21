@@ -2,6 +2,7 @@
 using Atelier.Cats.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -52,6 +53,15 @@ namespace Atelier.Cats.DataAccess.Repositories
             }
 
             return new Tuple<Cat, Cat>(firstContender, secondContender);
+        }
+
+        public async Task<IReadOnlyCollection<Cat>> GetWinnersAsync()
+        {
+            return await EntitySet
+                .Include(x => x.ChallengesWinner)
+                .Where(x => x.ChallengesWinner.Any())
+                .OrderByDescending(x => x.ChallengesWinner.ToList().Count)
+                .ToListAsync();
         }
     }
 }
