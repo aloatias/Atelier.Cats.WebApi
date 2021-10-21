@@ -32,6 +32,7 @@ namespace Atelier.Cats.WebApi.Controllers
             }
             catch (Exception ex)
             {
+                Logger.LogError(ex.StackTrace, ex.Message);
                 throw;
             }
         }
@@ -46,6 +47,7 @@ namespace Atelier.Cats.WebApi.Controllers
             }
             catch (Exception ex)
             {
+                Logger.LogError(ex.StackTrace, ex.Message);
                 throw;
             }
         }
