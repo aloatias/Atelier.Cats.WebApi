@@ -32,6 +32,11 @@ namespace Atelier.Cats.DataAccess.Repositories
             return await EntitySet.AnyAsync(criteria);
         }
 
+        public async Task<TEntity> FindAsync(Guid id)
+        {
+            return await EntitySet.FindAsync(id);
+        }
+
         public async Task Remove(Guid id)
         {
             var entity = await EntitySet.FindAsync(id);

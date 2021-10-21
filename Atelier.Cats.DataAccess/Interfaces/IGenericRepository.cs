@@ -45,6 +45,13 @@ namespace Atelier.Cats.DataAccess.Interfaces
         void UpdateAsync(IEnumerable<TEntity> entities, IDictionary<string, object> parameters = null);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<TEntity> FindAsync(Guid id);
+
+        /// <summary>
         /// This method is used to delete an object based on its identifier.
         /// </summary>
         /// <param name="id">The identifier of the object to delete.</param>

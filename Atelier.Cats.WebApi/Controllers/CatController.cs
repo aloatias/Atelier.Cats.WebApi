@@ -21,14 +21,28 @@ namespace Atelier.Cats.WebApi.Controllers
             _catService = catService;
         }
 
-        [Route("ImportCatsCatalog")]
+        [Route("Get/{id}")]
         [HttpGet]
-        public async Task<IActionResult> ImportCatsCatalogAsync()
+        public async Task<IActionResult> GetAsync(Guid id)
         {
             try
             {
-                await _catService.ImportCatsCatalogAsync();
-                return Ok();
+                return Ok(await UnitOfWork.CatRepository.FindAsync(id));
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.StackTrace, ex.Message);
+                throw;
+            }
+        }
+
+        [Route("GetByAtelierId/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetByAtelierIdAsync(string id)
+        {
+            try
+            {
+                return Ok(await UnitOfWork.CatRepository.FindByAtelierIdAsync(id));
             }
             catch (Exception ex)
             {
@@ -44,6 +58,22 @@ namespace Atelier.Cats.WebApi.Controllers
             try
             {
                 return Ok(await UnitOfWork.CatRepository.GetContendersAsync());
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.StackTrace, ex.Message);
+                throw;
+            }
+        }
+
+        [Route("ImportCatsCatalog")]
+        [HttpGet]
+        public async Task<IActionResult> ImportCatalogAsync()
+        {
+            try
+            {
+                await _catService.ImportCatsCatalogAsync();
+                return Ok();
             }
             catch (Exception ex)
             {
