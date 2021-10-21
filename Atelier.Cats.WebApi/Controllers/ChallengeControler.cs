@@ -1,6 +1,7 @@
-﻿using Atelier.Cats.DataAccess.Entities;
-using Atelier.Cats.DataAccess.Interfaces;
+﻿using Atelier.Cats.DataAccess.Interfaces;
 using Atelier.Cats.WebApi.Dtos;
+using Atelier.Cats.WebApi.Filters;
+using Atelier.Cats.WebApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,23 +13,30 @@ namespace Atelier.Cats.WebApi.Controllers
     [Route("[controller]")]
     public class ChallengeControler : AtelierControllerBase<ChallengeControler>
     {
-        private readonly IDateGenerator _dateGenerator;
+        private readonly IChallengeService _challengeService;
 
         public ChallengeControler(
             ILogger<ChallengeControler> logger,
             IUnitOfWork unitOfWork,
-            IDateGenerator dateGenerator) : base(logger, unitOfWork)
+            IChallengeService challengeService) : base(logger, unitOfWork)
         {
-            _dateGenerator = dateGenerator;
+            _challengeService = challengeService;
         }
 
         [Route("Get/{id}")]
         [HttpGet]
+        [GetChallengeFilter]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             try
             {
-                return Ok(await UnitOfWork.ChallengeRepository.FindAsync(id));
+                var challenge = await UnitOfWork.ChallengeRepository.FindAsync(id);
+                if (challenge != null)
+                {
+                    return Ok(challenge);
+                }
+
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -39,22 +47,13 @@ namespace Atelier.Cats.WebApi.Controllers
 
         [Route("Add")]
         [HttpPost]
-        public async Task<IActionResult> AddAsync(ChosenWinnerDto challengeResult)
+        public async Task<IActionResult> AddAsync(ChallengeResultDto challengeResult)
         {
             try
             {
-                var challenge = new Challenge
-                {
-                    ChallengerOneId = challengeResult.ChallengerOneId,
-                    ChallengerTwoId = challengeResult.ChallengerTwoId,
-                    WinnerId = challengeResult.WinnerId,
-                    VoteDate = _dateGenerator.GetDate()
-                };
+                var challenge = await _challengeService.AddAsync(challengeResult);
 
-                var createdChallenge = await UnitOfWork.ChallengeRepository.AddAsync(challenge);
-                await UnitOfWork.CommitAsync();
-
-                return Created("", createdChallenge.Id);
+                return Created("", challenge.Id);
             }
             catch (Exception ex)
             {

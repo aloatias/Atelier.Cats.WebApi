@@ -24,11 +24,18 @@ namespace Atelier.Cats.WebApi.Controllers
 
         [Route("Get/{id}")]
         [HttpGet]
+        [GetCatFilter]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             try
             {
-                return Ok(await UnitOfWork.CatRepository.FindAsync(id));
+                var cat = await UnitOfWork.CatRepository.FindAsync(id);
+                if (cat != null)
+                {
+                    return Ok(cat);
+                }
+
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -39,11 +46,18 @@ namespace Atelier.Cats.WebApi.Controllers
 
         [Route("GetByAtelierId/{id}")]
         [HttpGet]
+        [GetCatFilter]
         public async Task<IActionResult> GetByAtelierIdAsync(string id)
         {
             try
             {
-                return Ok(await UnitOfWork.CatRepository.FindByAtelierIdAsync(id));
+                var cat = await UnitOfWork.CatRepository.FindByAtelierIdAsync(id);
+                if (cat != null)
+                {
+                    return Ok(cat);
+                }
+
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -54,11 +68,18 @@ namespace Atelier.Cats.WebApi.Controllers
 
         [Route("GetContenders")]
         [HttpGet]
+        [GetContendersFilter]
         public async Task<IActionResult> GetContendersAsync()
         {
             try
             {
-                return Ok(await UnitOfWork.CatRepository.GetContendersAsync());
+                var contenders = await UnitOfWork.CatRepository.GetContendersAsync();
+                if (contenders != null)
+                {
+                    return Ok(contenders);
+                }
+
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -74,7 +95,13 @@ namespace Atelier.Cats.WebApi.Controllers
         {
             try
             {
-                return Ok(await UnitOfWork.CatRepository.GetWinnersAsync());
+                var winners = await UnitOfWork.CatRepository.GetWinnersAsync();
+                if (winners != null)
+                {
+                    return Ok(winners);
+                }
+
+                return NoContent();
             }
             catch (Exception ex)
             {

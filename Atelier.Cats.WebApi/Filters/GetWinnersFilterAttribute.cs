@@ -1,25 +1,16 @@
 ﻿using Atelier.Cats.DataAccess.Entities;
 using Atelier.Cats.WebApi.Dtos;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.WebApi.Filters
 {
-    public class GetWinnersFilterAttribute : ResultFilterAttribute
+    public class GetWinnersFilterAttribute : SuccessResultFilterAttribute
     {
-        public ObjectResult ActionResult { get; private set; }
-
         public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
-            var ActionResult = context.Result as ObjectResult;
-            if (ActionResult?.Value == null
-                || ActionResult.StatusCode < 200
-                || ActionResult.StatusCode >= 300)
-            {
-                await next();
-            }
+            await CheckResultAsync(context, next);
 
             var result = new List<WinnerResultDto>();
 

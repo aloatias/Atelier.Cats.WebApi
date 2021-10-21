@@ -2,7 +2,7 @@
 
 namespace Atelier.Cats.WebApi.Dtos
 {
-    public class ChosenWinnerDto
+    public class ChallengeResultDto
     {
         public Guid ChallengerOneId { get; set; }
         public Guid ChallengerTwoId { get; set; }
