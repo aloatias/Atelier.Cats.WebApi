@@ -32,7 +32,7 @@ namespace Atelier.Cats.WebApi.Services
             {
                 var currentDate = _dateGenerator.GetDate();
                 catsToAdd.Add(new Cat { AtelierId = cat.AtelierId, Url = cat.Url, CreationDate = currentDate, LastUpdate = currentDate });
-            };
+            }
 
             await _unitOfWork.CatRepository.AddAsync(catsToAdd);
             await _unitOfWork.CommitAsync();

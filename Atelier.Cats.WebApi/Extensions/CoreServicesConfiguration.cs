@@ -9,6 +9,7 @@ namespace Atelier.Cats.WebApi.Extensions
         public static void ConfigureServices(this IServiceCollection services)
         {
             services.AddScoped<ICatService, CatService>();
+            services.AddScoped<IChallengeService, ChallengeService>();
         }
     }
 }
