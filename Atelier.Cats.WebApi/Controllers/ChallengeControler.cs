@@ -22,6 +22,21 @@ namespace Atelier.Cats.WebApi.Controllers
             _dateGenerator = dateGenerator;
         }
 
+        [Route("Get/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetAsync(Guid id)
+        {
+            try
+            {
+                return Ok(await UnitOfWork.ChallengeRepository.FindAsync(id));
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.StackTrace, ex.Message);
+                throw;
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> SetChallengeResultAsync(ChallengeResultDto challengeResult)
         {
