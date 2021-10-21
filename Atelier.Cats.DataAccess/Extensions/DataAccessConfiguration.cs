@@ -14,12 +14,12 @@ namespace Atelier.Cats.DataAccess.Extensions
         public static void InjectServices(IServiceCollection services)
         {
             // Real database
-            services.AddDbContext<AtelierCatsContext>(options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+            //services.AddDbContext<AtelierCatsContext>(options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
             // In memory database
-            //services.AddDbContext<AtelierCatsContext>(options => options
-            //    .UseInMemoryDatabase("AtelierCatsContext")
-            //    .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+            services.AddDbContext<AtelierCatsContext>(options => options
+                .UseInMemoryDatabase("AtelierCatsContext")
+                .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
 
             services.AddScoped<IDateGenerator, DateGenerator>();
             services.AddScoped<ICatRepository, CatRepository>();
