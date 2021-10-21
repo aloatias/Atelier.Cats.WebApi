@@ -42,20 +42,17 @@ namespace Atelier.Cats.DataAccess.Entities.Migrations
                         name: "FK_Challenge_Cat_ChallengerOneId",
                         column: x => x.ChallengerOneId,
                         principalTable: "Cat",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Challenge_Cat_ChallengerTwoId",
                         column: x => x.ChallengerTwoId,
                         principalTable: "Cat",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Challenge_Cat_WinnerId",
                         column: x => x.WinnerId,
                         principalTable: "Cat",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

@@ -18,6 +18,15 @@ namespace Atelier.Cats.DataAccess.Entities.Configurations
             builder.Property(x => x.Url);
             builder.Property(x => x.CreationDate).IsRequired();
             builder.Property(x => x.LastUpdate).IsRequired();
+
+            builder.HasMany(x => x.ChallengesAsContenderOne)
+                .WithOne(x => x.ChallengerOne);
+
+            builder.HasMany(x => x.ChallengesAsContenderTwo)
+                .WithOne(x => x.ChallengerTwo);
+
+            builder.HasMany(x => x.ChallengesWinner)
+                .WithOne(x => x.Winner);
         }
     }
 }
