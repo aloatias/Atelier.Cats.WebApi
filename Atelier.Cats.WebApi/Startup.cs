@@ -1,4 +1,7 @@
 using Atelier.Cats.DataAccess.Extensions;
+using Atelier.Cats.WebApi.Extensions;
+using Atelier.Gateway.Configuration;
+using Atelier.Gateway.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +28,8 @@ namespace Atelier.Cats.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atelier.Cats.WebApi", Version = "v1" });
             });
+
+            services.AddLogging();
 
             InjectCustomServices(services);
         }
@@ -53,10 +58,17 @@ namespace Atelier.Cats.WebApi
 
         private void InjectCustomServices(IServiceCollection services)
         {
-            ServicesConfiguration.InjectDataService(services);
-            ServicesConfiguration.InjectDateService(services);
-            ServicesConfiguration.InjectRepositoryServices(services);
-            ServicesConfiguration.InjectUnitOfWorkService(services);
+            // Data Access
+            DataAccessConfiguration.InjectServices(services);
+
+            // Core Services
+            CoreServicesConfiguration.ConfigureServices(services);
+
+            // Atelier Gateway
+            CatsGatewayConfiguration.InjectServices(services, Configuration);
+
+            // Configuration
+            services.Configure<AtelierCatsUrlOptions>(Configuration.GetSection("Urls"));
         }
     }
 }

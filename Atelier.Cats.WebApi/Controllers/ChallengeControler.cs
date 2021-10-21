@@ -23,7 +23,7 @@ namespace Atelier.Cats.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task SetChallengeResultAsync(ChallengeResultDto challengeResult)
+        public async Task<IActionResult> SetChallengeResultAsync(ChallengeResultDto challengeResult)
         {
             try
             {
@@ -35,8 +35,10 @@ namespace Atelier.Cats.WebApi.Controllers
                     VoteDate = _dateGenerator.GetDate()
                 };
 
-                await UnitOfWork.ChallengeRepository.AddAsync(challenge);
+                var createdChallenge = await UnitOfWork.ChallengeRepository.AddAsync(challenge);
                 await UnitOfWork.CommitAsync();
+
+                return Created("", createdChallenge.Id);
             }
             catch (Exception ex)
             {
