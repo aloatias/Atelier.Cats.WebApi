@@ -1,4 +1,5 @@
 ﻿using Atelier.Cats.DataAccess.Interfaces;
+using Atelier.Cats.WebApi.Filters;
 using Atelier.Cats.WebApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -58,6 +59,22 @@ namespace Atelier.Cats.WebApi.Controllers
             try
             {
                 return Ok(await UnitOfWork.CatRepository.GetContendersAsync());
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.StackTrace, ex.Message);
+                throw;
+            }
+        }
+
+        [Route("GetWinners")]
+        [HttpGet]
+        [GetWinnersFilter]
+        public async Task<IActionResult> GetWinnersAsync()
+        {
+            try
+            {
+                return Ok(await UnitOfWork.CatRepository.GetWinnersAsync());
             }
             catch (Exception ex)
             {
