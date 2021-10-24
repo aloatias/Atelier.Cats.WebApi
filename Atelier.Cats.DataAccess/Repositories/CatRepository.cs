@@ -24,10 +24,10 @@ namespace Atelier.Cats.DataAccess.Repositories
 
         public async Task<Tuple<Cat, Cat>> GetContendersAsync()
         {
-            Cat firstContender;
-            Cat secondContender;
+            Cat firstContender = null;
+            Cat secondContender = null;
 
-            while (true)
+            while (true && await EntitySet.AnyAsync())
             {
                 firstContender = await EntitySet
                 .OrderBy(x => Guid.NewGuid())

@@ -26,6 +26,12 @@ namespace Atelier.Cats.DataAccess.Interfaces
         Task AddAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<int> CountAsync();
+
+        /// <summary>
         /// This method is used to check if an object exists according to a where expression
         /// </summary>
         /// <param name="criteria"></param>

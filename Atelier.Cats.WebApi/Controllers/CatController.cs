@@ -22,6 +22,11 @@ namespace Atelier.Cats.WebApi.Controllers
             _catService = catService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("Get/{id}")]
         [HttpGet]
         [GetCatFilter]
@@ -44,6 +49,11 @@ namespace Atelier.Cats.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("GetByAtelierId/{id}")]
         [HttpGet]
         [GetCatFilter]
@@ -66,6 +76,10 @@ namespace Atelier.Cats.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("GetContenders")]
         [HttpGet]
         [GetContendersFilter]
@@ -74,7 +88,8 @@ namespace Atelier.Cats.WebApi.Controllers
             try
             {
                 var contenders = await UnitOfWork.CatRepository.GetContendersAsync();
-                if (contenders != null)
+                if (contenders.Item1 != null
+                    && contenders.Item2 != null)
                 {
                     return Ok(contenders);
                 }
@@ -88,6 +103,10 @@ namespace Atelier.Cats.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("GetWinners")]
         [HttpGet]
         [GetWinnersFilter]
@@ -110,6 +129,10 @@ namespace Atelier.Cats.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [Route("ImportCatsCatalog")]
         [HttpGet]
         public async Task<IActionResult> ImportCatalogAsync()
