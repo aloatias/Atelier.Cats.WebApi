@@ -11,18 +11,23 @@ namespace Atelier.Cats.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ChallengeControler : AtelierControllerBase<ChallengeControler>
+    public class ChallengeController : AtelierControllerBase<ChallengeController>
     {
         private readonly IChallengeService _challengeService;
 
-        public ChallengeControler(
-            ILogger<ChallengeControler> logger,
+        public ChallengeController(
+            ILogger<ChallengeController> logger,
             IUnitOfWork unitOfWork,
             IChallengeService challengeService) : base(logger, unitOfWork)
         {
             _challengeService = challengeService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Route("Get/{id}")]
         [HttpGet]
         [GetChallengeFilter]
@@ -45,6 +50,30 @@ namespace Atelier.Cats.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("GetTotalVotes")]
+        [HttpGet]
+        public async Task<IActionResult> GetTotalVotesAsync()
+        {
+            try
+            {
+                return Ok(await UnitOfWork.ChallengeRepository.CountAsync());
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.StackTrace, ex.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="challengeResult"></param>
+        /// <returns></returns>
         [Route("Add")]
         [HttpPost]
         public async Task<IActionResult> AddAsync(ChallengeResultDto challengeResult)

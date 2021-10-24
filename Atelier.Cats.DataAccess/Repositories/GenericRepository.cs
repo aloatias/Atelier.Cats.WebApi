@@ -27,6 +27,11 @@ namespace Atelier.Cats.DataAccess.Repositories
             await EntitySet.AddRangeAsync(entities);
         }
 
+        public async Task<int> CountAsync()
+        {
+            return await EntitySet.CountAsync();
+        }
+
         public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> criteria)
         {
             return await EntitySet.AnyAsync(criteria);

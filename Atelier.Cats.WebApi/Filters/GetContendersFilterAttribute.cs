@@ -1,24 +1,39 @@
 ﻿using Atelier.Cats.DataAccess.Entities;
 using Atelier.Cats.WebApi.Dtos;
+using Bogus;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.WebApi.Filters
 {
-    public class GetContendersFilterAttribute : SuccessResultFilterAttribute
+    public class GetContendersFilterAttribute : ResultFilterAttribute
     {
         public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
-            await CheckResultAsync(context, next);
+            var actionResult = context.Result as ObjectResult;
+            if (actionResult?.Value == null
+                || actionResult?.StatusCode < 200
+                || actionResult?.StatusCode >= 300)
+            {
+                await next();
+                return;
+            }
 
-            var partialResult = ActionResult.Value as Tuple<Cat, Cat>;
+            var partialResult = actionResult.Value as Tuple<Cat, Cat>;
+
+            var fakeCatNames = new Faker<WinnerResultDto>()
+                    .RuleFor(x => x.Name, (f, u) => f.Name.FirstName())
+                    .Generate(2);
+
             var result = new ContendersCoupleDto
             {
                 ContenderOne = new ContenderDto
                 {
                     Id = partialResult.Item1.Id,
                     AtelierId = partialResult.Item1.AtelierId,
+                    Name = fakeCatNames[0].Name,
                     Url = partialResult.Item1.Url
                 },
 
@@ -26,11 +41,12 @@ namespace Atelier.Cats.WebApi.Filters
                 {
                     Id = partialResult.Item2.Id,
                     AtelierId = partialResult.Item2.AtelierId,
+                    Name = fakeCatNames[1].Name,
                     Url = partialResult.Item2.Url
                 }
             };
 
-            ActionResult.Value = result;
+            actionResult.Value = result;
             await next();
         }
     }
