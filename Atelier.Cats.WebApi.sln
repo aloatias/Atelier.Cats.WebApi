@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atelier.Cats.DataAccess.Ent
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atelier.Cats.DataAccess", "Atelier.Cats.DataAccess\Atelier.Cats.DataAccess.csproj", "{CD5D183F-C607-4018-B27B-3AB08C77A0AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atelier.Gateway", "Atelier.Gateway\Atelier.Gateway.csproj", "{CF594536-2B0A-4E0C-8D70-951A27046FB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atelier.Gateway", "Atelier.Gateway\Atelier.Gateway.csproj", "{CF594536-2B0A-4E0C-8D70-951A27046FB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

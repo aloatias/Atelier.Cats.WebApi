@@ -5,21 +5,22 @@ using Atelier.Cats.DataAccess.Tools;
 using Atelier.Cats.DataAccess.Wrapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Atelier.Cats.DataAccess.Extensions
 {
     public static class DataAccessConfiguration
     {
-        public static void InjectServices(IServiceCollection services)
+        public static void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
             // Real database
-            //services.AddDbContext<AtelierCatsContext>(options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+            services.AddDbContext<AtelierCatsContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             // In memory database
-            services.AddDbContext<AtelierCatsContext>(options => options
-                .UseInMemoryDatabase("AtelierCatsContext")
-                .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+            //services.AddDbContext<AtelierCatsContext>(options => options
+            //    .UseInMemoryDatabase("AtelierCatsContext")
+            //    .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
 
             services.AddScoped<IDateGenerator, DateGenerator>();
             services.AddScoped<ICatRepository, CatRepository>();
