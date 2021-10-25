@@ -42,6 +42,7 @@ namespace Atelier.Cats.WebApi
             });
 
             services.AddLogging();
+            services.AddApplicationInsightsTelemetry(Configuration["APPLICATIONINSIGHTS_CONNECTIONSTRING"]);
 
             InjectCustomServices(services);
 
@@ -62,11 +63,9 @@ namespace Atelier.Cats.WebApi
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseCors(_policyName);
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -84,7 +83,7 @@ namespace Atelier.Cats.WebApi
         private void InjectCustomServices(IServiceCollection services)
         {
             // Data Access
-            DataAccessConfiguration.InjectServices(services);
+            DataAccessConfiguration.InjectServices(services, Configuration);
 
             // Core Services
             CoreServicesConfiguration.ConfigureServices(services);
