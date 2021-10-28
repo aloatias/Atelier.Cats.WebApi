@@ -55,7 +55,7 @@ namespace Atelier.Cats.DataAccess.Repositories
             return new Tuple<Cat, Cat>(firstContender, secondContender);
         }
 
-        public async Task<IReadOnlyCollection<Cat>> GetWinnersAsync()
+        public async Task<IEnumerable<Cat>> GetWinnersAsync()
         {
             return await EntitySet
                 .Include(x => x.ChallengesWinner)

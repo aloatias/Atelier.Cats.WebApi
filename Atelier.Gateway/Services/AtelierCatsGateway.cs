@@ -20,7 +20,7 @@ namespace Atelier.Gateway.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IReadOnlyCollection<AtelierCatDto>> GetCatsCatalogAsync()
+        public async Task<IEnumerable<AtelierCatDto>> GetCatsCatalogAsync()
         {
             var client =_httpClientFactory.CreateClient();
 

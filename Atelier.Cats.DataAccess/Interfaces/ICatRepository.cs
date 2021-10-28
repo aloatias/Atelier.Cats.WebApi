@@ -9,6 +9,6 @@ namespace Atelier.Cats.DataAccess.Interfaces
     {
         Task<Cat> FindByAtelierIdAsync(string id);
         Task<Tuple<Cat, Cat>> GetContendersAsync();
-        Task<IReadOnlyCollection<Cat>> GetWinnersAsync();
+        Task<IEnumerable<Cat>> GetWinnersAsync();
     }
 }
