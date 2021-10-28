@@ -6,6 +6,6 @@ namespace Atelier.Gateway.Dtos
     public class AtelierCatsCatalogDto
     {
         [JsonPropertyName("images")]
-        public IReadOnlyCollection<AtelierCatDto> CatsCatalog{ get; set; }
+        public IEnumerable<AtelierCatDto> CatsCatalog{ get; set; }
     }
 }

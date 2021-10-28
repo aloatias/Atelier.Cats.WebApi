@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Atelier.Cats.WebApi.Filters
 {
-    public class GetCatFilterAttribute : ResultFilterAttribute
+    public class ChallengeFilterAttribute : ResultFilterAttribute
     {
         public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
@@ -19,14 +19,14 @@ namespace Atelier.Cats.WebApi.Filters
                 return;
             }
 
-            var partialResult = actionResult.Value as Cat;
-            var result = new CatDto
+            var partialResult = actionResult.Value as Challenge;
+            var result = new ChallengeDto
             {
                 Id = partialResult.Id,
-                AtelierId = partialResult.AtelierId,
-                Url = partialResult.Url,
-                CreationDate = partialResult.CreationDate,
-                LastUpdate = partialResult.LastUpdate
+                ChallengerOneId = partialResult.ChallengerOneId,
+                ChallengerTwoId = partialResult.ChallengerTwoId,
+                WinnerId = partialResult.WinnerId,
+                VoteDate = partialResult.VoteDate
             };
 
             actionResult.Value = result;
