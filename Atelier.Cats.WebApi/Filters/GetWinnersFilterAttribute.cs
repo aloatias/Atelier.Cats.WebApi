@@ -4,6 +4,7 @@ using Bogus;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.WebApi.Filters
@@ -38,7 +39,7 @@ namespace Atelier.Cats.WebApi.Filters
                         WinnerId = challenge.Id,
                         Name = fakeCatName,
                         Url = challenge.Url,
-                        Votes = challenge.ChallengesWinner.Count
+                        Votes = challenge.ChallengesWinner.Count()
                     }   
                 );
             });
