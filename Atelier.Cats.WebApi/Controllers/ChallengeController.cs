@@ -30,7 +30,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// <returns></returns>
         [Route("{id}")]
         [HttpGet]
-        [GetChallengeFilter]
+        [ChallengeFilter]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             try

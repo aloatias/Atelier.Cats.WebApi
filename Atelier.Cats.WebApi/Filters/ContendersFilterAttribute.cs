@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Atelier.Cats.WebApi.Filters
 {
-    public class GetContendersFilterAttribute : ResultFilterAttribute
+    public class ContendersFilterAttribute : ResultFilterAttribute
     {
         public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
