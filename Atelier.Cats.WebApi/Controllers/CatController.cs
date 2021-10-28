@@ -27,7 +27,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("Get/{id}")]
+        [Route("{id}")]
         [HttpGet]
         [GetCatFilter]
         public async Task<IActionResult> GetAsync(Guid id)
@@ -54,7 +54,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("GetByAtelierId/{id}")]
+        [Route("atelier/{id}")]
         [HttpGet]
         [GetCatFilter]
         public async Task<IActionResult> GetByAtelierIdAsync(string id)
@@ -80,7 +80,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("GetContenders")]
+        [Route("Contenders")]
         [HttpGet]
         [GetContendersFilter]
         public async Task<IActionResult> GetContendersAsync()
@@ -107,7 +107,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("GetWinners")]
+        [Route("Winners")]
         [HttpGet]
         [GetWinnersFilter]
         public async Task<IActionResult> GetWinnersAsync()
@@ -133,7 +133,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("ImportCatsCatalog")]
+        [Route("Catalog")]
         [HttpGet]
         public async Task<IActionResult> ImportCatalogAsync()
         {

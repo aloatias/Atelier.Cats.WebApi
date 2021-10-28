@@ -28,7 +28,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("Get/{id}")]
+        [Route("{id}")]
         [HttpGet]
         [GetChallengeFilter]
         public async Task<IActionResult> GetAsync(Guid id)
@@ -54,7 +54,7 @@ namespace Atelier.Cats.WebApi.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("GetTotalVotes")]
+        [Route("TotalVotes")]
         [HttpGet]
         public async Task<IActionResult> GetTotalVotesAsync()
         {
@@ -74,7 +74,6 @@ namespace Atelier.Cats.WebApi.Controllers
         /// </summary>
         /// <param name="challengeResult"></param>
         /// <returns></returns>
-        [Route("Add")]
         [HttpPost]
         public async Task<IActionResult> AddAsync(ChallengeResultDto challengeResult)
         {
