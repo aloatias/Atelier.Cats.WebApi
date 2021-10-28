@@ -6,6 +6,6 @@ namespace Atelier.Gateway.Interfaces
 {
     public interface IAtelierCatsGateway
     {
-        Task<IReadOnlyCollection<AtelierCatDto>> GetCatsCatalogAsync();
+        Task<IEnumerable<AtelierCatDto>> GetCatsCatalogAsync();
     }
 }

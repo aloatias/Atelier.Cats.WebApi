@@ -10,8 +10,8 @@ namespace Atelier.Cats.DataAccess.Entities
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdate { get; set; }
 
-        public IReadOnlyCollection<Challenge> ChallengesAsContenderOne { get; set; }
-        public IReadOnlyCollection<Challenge> ChallengesAsContenderTwo { get; set; }
-        public IReadOnlyCollection<Challenge> ChallengesWinner { get; set; }
+        public IEnumerable<Challenge> ChallengesAsContenderOne { get; set; }
+        public IEnumerable<Challenge> ChallengesAsContenderTwo { get; set; }
+        public IEnumerable<Challenge> ChallengesWinner { get; set; }
     }
 }

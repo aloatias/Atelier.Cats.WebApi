@@ -41,7 +41,7 @@ namespace Atelier.Cats.DataAccess.Repositories
                 bool existingChallenge = await _context
                     .Set<Challenge>()
                     .AnyAsync(x =>
-                    (x.ChallengerOneId == firstContender.Id 
+                    (x.ChallengerOneId == firstContender.Id
                         && x.ChallengerTwoId == secondContender.Id)
                     || (x.ChallengerTwoId == firstContender.Id
                         && x.ChallengerOneId == firstContender.Id));
@@ -55,12 +55,12 @@ namespace Atelier.Cats.DataAccess.Repositories
             return new Tuple<Cat, Cat>(firstContender, secondContender);
         }
 
-        public async Task<IReadOnlyCollection<Cat>> GetWinnersAsync()
+        public async Task<IEnumerable<Cat>> GetWinnersAsync()
         {
             return await EntitySet
                 .Include(x => x.ChallengesWinner)
                 .Where(x => x.ChallengesWinner.Any())
-                .OrderByDescending(x => x.ChallengesWinner.ToList().Count)
+                .OrderByDescending(x => x.ChallengesWinner.Count())
                 .ToListAsync();
         }
     }
