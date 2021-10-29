@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atelier.Cats.Contracts\Atelier.Cats.Contracts.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Domain\Atelier.Cats.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atelier.Cats.Services.Abstractions\Atelier.Cats.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Atelier.Gateway\Atelier.Gateway.csproj" />
+  </ItemGroup>
+
+</Project>

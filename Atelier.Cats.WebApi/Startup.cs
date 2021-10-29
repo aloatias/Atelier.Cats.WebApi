@@ -1,5 +1,6 @@
-using Atelier.Cats.DataAccess.Extensions;
-using Atelier.Cats.WebApi.Extensions;
+using Atelier.Cats.Infrastructure.Persistence.Extensions;
+using Atelier.Cats.Infrastructure.Presentation;
+using Atelier.Cats.Services.Extensions;
 using Atelier.Gateway.Configuration;
 using Atelier.Gateway.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,9 @@ namespace Atelier.Cats.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers()
+                .AddApplicationPart(typeof(AssemblyReference).Assembly);
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy(name: _policyName, builder =>
@@ -83,10 +87,10 @@ namespace Atelier.Cats.WebApi
         private void InjectCustomServices(IServiceCollection services)
         {
             // Data Access
-            DataAccessConfiguration.InjectServices(services, Configuration);
+            PersistenceConfiguration.InjectServices(services, Configuration);
 
             // Core Services
-            CoreServicesConfiguration.ConfigureServices(services);
+            ServicesConfiguration.InjectServices(services);
 
             // Atelier Gateway
             CatsGatewayConfiguration.InjectServices(services, Configuration);

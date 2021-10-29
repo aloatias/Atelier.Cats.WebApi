@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Filters\GetContendersFilterAttribute.cs~RF1ff5ea8e.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Bogus" Version="33.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.18.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
@@ -20,7 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atelier.Cats.DataAccess\Atelier.Cats.DataAccess.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Contracts\Atelier.Cats.Contracts.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Domain\Atelier.Cats.Domain.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Infrastructure.Persistence\Atelier.Cats.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Infrastructure.Presentation\Atelier.Cats.Infrastructure.Presentation.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Services.Abstractions\Atelier.Cats.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Services\Atelier.Cats.Services.csproj" />
     <ProjectReference Include="..\Atelier.Gateway\Atelier.Gateway.csproj" />
   </ItemGroup>
 
