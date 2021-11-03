@@ -21,6 +21,8 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<IAtelierResponse<Guid>> AddAsync(Challenge challenge)
         {
+            // Check date not null
+
             // Check conflict
             var challengeExist = await _unitOfWork.ChallengeRepository
                 .ExistsAsync(x => x.ChallengerOneId == challenge.ChallengerOneId
@@ -34,23 +36,23 @@ namespace Atelier.Cats.Application.Services
             }
 
             // Check existence
-            var contenderOne = await _unitOfWork.CatRepository.FindAsync(challenge.ChallengerOneId);
-            var contenderTwo = await _unitOfWork.CatRepository.FindAsync(challenge.ChallengerTwoId);
+            var contenderOneExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.ChallengerOneId);
+            var contenderTwoExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.ChallengerTwoId);
 
             var sb = new StringBuilder();
 
-            if (contenderOne is null)
+            if (!contenderOneExists)
             {
                 sb.Append($"The cat { challenge.ChallengerOneId } doesn't exist \r\n");
             }
 
-            if (contenderTwo is null)
+            if (!contenderTwoExists)
             {
                 sb.Append($"The cat { challenge.ChallengerTwoId } doesn't exist");
             }
 
-            if (contenderOne is null
-                || contenderTwo is null)
+            if (!contenderOneExists
+                || !contenderTwoExists)
             {
                 return new BadRequest<Guid>(sb.ToString());
             }
