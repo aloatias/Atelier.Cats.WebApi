@@ -30,7 +30,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             }
         }
 
-        protected IActionResult SendResponse<TEntity>(IAtelierResponse<TEntity> response)
+        protected IActionResult SendResponse<TContent>(IAtelierResponse<TContent> response)
         {
             switch (response.Status)
             {
