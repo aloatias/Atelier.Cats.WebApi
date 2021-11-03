@@ -1,7 +1,7 @@
 ﻿namespace Atelier.Cats.Application.Abstractions.Models
 {
-    public interface IContent<TEntity>
+    public interface IContent<TContent>
     {
-        TEntity Content { get; }
+        TContent Content { get; }
     }
 }
