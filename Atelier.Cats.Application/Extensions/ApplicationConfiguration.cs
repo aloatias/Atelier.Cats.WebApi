@@ -1,9 +1,10 @@
-﻿using Atelier.Cats.Services.Abstractions;
+﻿using Atelier.Cats.Application.Interfaces;
+using Atelier.Cats.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Atelier.Cats.Services.Extensions
+namespace Atelier.Cats.Application
 {
-    public static class ServicesConfiguration
+    public static class ApplicationConfiguration
     {
         public static void InjectServices(this IServiceCollection services)
         {

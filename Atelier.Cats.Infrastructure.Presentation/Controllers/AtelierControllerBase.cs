@@ -1,20 +1,51 @@
-﻿using Atelier.Cats.Domain.Repositories;
+﻿using Atelier.Cats.Application.Interfaces;
+using Atelier.Cats.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace Atelier.Cats.Infrastructure.Presentation.Controllers
 {
-    public class AtelierControllerBase<TEntity> : ControllerBase
+    public class AtelierControllerBase<TController> : ControllerBase
     {
-        protected ILogger<TEntity> Logger { get; private set; }
-        protected IUnitOfWork UnitOfWork { get; private set; }
+        protected ILogger<TController> Logger { get; private set; }
 
         public AtelierControllerBase(
-            ILogger<TEntity> logger,
-            IUnitOfWork unitOfWork)
+            ILogger<TController> logger)
         {
             Logger = logger;
-            UnitOfWork = unitOfWork;
+        }
+
+        protected IActionResult SendResponse(IAtelierResponse response)
+        {
+            switch (response.Status)
+            {
+                case HttpStatusCode.OK:
+                    return Ok(response);
+                case HttpStatusCode.BadRequest:
+                    return BadRequest(response.ErrorMessage);
+                case HttpStatusCode.NoContent:
+                    return NoContent();
+                default:
+                    return StatusCode((int)HttpStatusCode.InternalServerError, "An error has occurred. Please try again later");
+            }
+        }
+
+        protected IActionResult SendResponse<TEntity>(IAtelierResponse<TEntity> response) where TEntity : AtelierEntityBase
+        {
+            switch (response.Status)
+            {
+                case HttpStatusCode.OK:
+                    return Ok(response.Content);
+                case HttpStatusCode.Created:
+                    return Created(response.ResourceUrl, response?.Content);
+                case HttpStatusCode.BadRequest:
+                    return BadRequest(response.ErrorMessage);
+                case HttpStatusCode.NoContent:
+                    return NoContent();
+                default:
+                    return StatusCode((int)HttpStatusCode.InternalServerError, "An error has occurred. Please try again later");
+            }
         }
     }
 }

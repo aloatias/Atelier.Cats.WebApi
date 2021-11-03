@@ -42,6 +42,11 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             return await EntitySet.FindAsync(id);
         }
 
+        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await EntitySet.FirstOrDefaultAsync(predicate);
+        }
+
         public async Task Remove(Guid id)
         {
             var entity = await EntitySet.FindAsync(id);

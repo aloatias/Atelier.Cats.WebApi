@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Atelier.Cats.Application\Atelier.Cats.Application.csproj" />
     <ProjectReference Include="..\Atelier.Cats.Domain\Atelier.Cats.Domain.csproj" />
-    <ProjectReference Include="..\Atelier.Cats.Services.Abstractions\Atelier.Cats.Services.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

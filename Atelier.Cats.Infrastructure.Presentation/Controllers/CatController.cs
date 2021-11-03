@@ -1,6 +1,5 @@
-﻿using Atelier.Cats.Domain.Repositories;
+﻿using Atelier.Cats.Application.Interfaces;
 using Atelier.Cats.Infrastructure.Presentation.Filters;
-using Atelier.Cats.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,8 +15,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
 
         public CatController(
             ILogger<CatController> logger,
-            IUnitOfWork unitOfWork,
-            ICatService catService) : base(logger, unitOfWork)
+            ICatService catService) : base(logger)
         {
             _catService = catService;
         }
@@ -34,13 +32,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                var cat = await UnitOfWork.CatRepository.FindAsync(id);
-                if (cat != null)
-                {
-                    return Ok(cat);
-                }
-
-                return NoContent();
+                return SendResponse(await _catService.FindAsync(id));
             }
             catch (Exception ex)
             {
@@ -61,13 +53,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                var cat = await UnitOfWork.CatRepository.FindByAtelierIdAsync(id);
-                if (cat != null)
-                {
-                    return Ok(cat);
-                }
-
-                return NoContent();
+                return SendResponse(await _catService.FindAsync(id));
             }
             catch (Exception ex)
             {
@@ -87,14 +73,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                var contenders = await UnitOfWork.CatRepository.GetContendersAsync();
-                if (contenders.Item1 != null
-                    && contenders.Item2 != null)
-                {
-                    return Ok(contenders);
-                }
-
-                return NoContent();
+                return SendResponse(await _catService.GetContendersAsync());
             }
             catch (Exception ex)
             {
@@ -114,13 +93,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                var winners = await UnitOfWork.CatRepository.GetWinnersAsync();
-                if (winners != null)
-                {
-                    return Ok(winners);
-                }
-
-                return NoContent();
+                return SendResponse(await _catService.GetWinnersAsync());
             }
             catch (Exception ex)
             {
@@ -139,8 +112,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                await _catService.ImportCatsCatalogAsync();
-                return Ok();
+                return SendResponse(await _catService.ImportCatsCatalogAsync());
             }
             catch (Exception ex)
             {

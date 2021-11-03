@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atelier.Cats.Services.Abstractions\Atelier.Cats.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Contracts\Atelier.Cats.Contracts.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Domain\Atelier.Cats.Domain.csproj" />
     <ProjectReference Include="..\Atelier.Gateway\Atelier.Gateway.csproj" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
-﻿using Atelier.Cats.Contracts;
-using Atelier.Cats.Domain.Repositories;
+﻿using Atelier.Cats.Application.Interfaces;
+using Atelier.Cats.Contracts;
+using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Infrastructure.Presentation.Filters;
-using Atelier.Cats.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,8 +17,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
 
         public ChallengeController(
             ILogger<ChallengeController> logger,
-            IUnitOfWork unitOfWork,
-            IChallengeService challengeService) : base(logger, unitOfWork)
+            IChallengeService challengeService) : base(logger)
         {
             _challengeService = challengeService;
         }
@@ -35,13 +34,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                var challenge = await UnitOfWork.ChallengeRepository.FindAsync(id);
-                if (challenge != null)
-                {
-                    return Ok(challenge);
-                }
-
-                return NoContent();
+                return SendResponse(await _challengeService.FindAsync(id));
             }
             catch (Exception ex)
             {
@@ -60,7 +53,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                return Ok(await UnitOfWork.ChallengeRepository.CountAsync());
+                return Ok((await _challengeService.CountAsync()).Content);
             }
             catch (Exception ex)
             {
@@ -79,9 +72,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                var challenge = await _challengeService.AddAsync(challengeResult);
-
-                return Created("", challenge.Id);
+                return SendResponse(await _challengeService.AddAsync(challengeResult));
             }
             catch (Exception ex)
             {

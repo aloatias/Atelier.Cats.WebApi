@@ -1,10 +1,12 @@
-﻿using Atelier.Cats.Contracts;
+﻿using Atelier.Cats.Application.Interfaces;
+using Atelier.Cats.Application.Models;
+using Atelier.Cats.Contracts;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
-using Atelier.Cats.Services.Abstractions;
+using System;
 using System.Threading.Tasks;
 
-namespace Atelier.Cats.Services
+namespace Atelier.Cats.Application.Services
 {
     public class ChallengeService : IChallengeService
     {
@@ -19,7 +21,7 @@ namespace Atelier.Cats.Services
             _dateGeneratorService = dateGeneratorService;
         }
 
-        public async Task<Challenge> AddAsync(ChallengeResultDto challengeResultDto)
+        public async Task<IAtelierResponse<Guid>> AddAsync(ChallengeResultDto challengeResultDto)
         {
             var challenge = new Challenge
             {
@@ -32,7 +34,23 @@ namespace Atelier.Cats.Services
             var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challenge);
             await _unitOfWork.CommitAsync();
 
-            return createdChallenge;
+            return new Created<Guid>(createdChallenge.Id);
+        }
+
+        public async Task<IAtelierResponse<int>> CountAsync()
+        {
+            return new Ok<int>(await _unitOfWork.ChallengeRepository.CountAsync());
+        }
+
+        public async Task<IAtelierResponse<Challenge>> FindAsync(Guid id)
+        {
+            var challenge = await _unitOfWork.ChallengeRepository.FindAsync(id);
+            if (challenge is null)
+            {
+                return new NoContent<Challenge>("The searched challenge wasn't found");
+            }
+
+            return new Ok<Challenge>(challenge);
         }
     }
 }

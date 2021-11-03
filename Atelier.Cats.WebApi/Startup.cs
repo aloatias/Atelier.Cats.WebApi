@@ -1,6 +1,6 @@
+using Atelier.Cats.Application;
 using Atelier.Cats.Infrastructure.Persistence.Extensions;
 using Atelier.Cats.Infrastructure.Presentation;
-using Atelier.Cats.Services.Extensions;
 using Atelier.Gateway.Configuration;
 using Atelier.Gateway.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -86,14 +86,14 @@ namespace Atelier.Cats.WebApi
 
         private void InjectCustomServices(IServiceCollection services)
         {
-            // Data Access
+            // Persistence
             PersistenceConfiguration.InjectServices(services, Configuration);
 
             // Core Services
-            ServicesConfiguration.InjectServices(services);
+            ApplicationConfiguration.InjectServices(services);
 
             // Atelier Gateway
-            CatsGatewayConfiguration.InjectServices(services, Configuration);
+            GatewayConfiguration.InjectServices(services, Configuration);
 
             // Configuration
             services.Configure<AtelierCatsUrlOptions>(Configuration.GetSection("Urls"));

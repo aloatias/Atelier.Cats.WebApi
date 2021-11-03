@@ -58,6 +58,13 @@ namespace Atelier.Cats.Domain.Repositories
         Task<TEntity> FindAsync(Guid id);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
         /// This method is used to delete an object based on its identifier.
         /// </summary>
         /// <param name="id">The identifier of the object to delete.</param>
