@@ -1,4 +1,4 @@
-﻿using Atelier.Cats.Application.Interfaces;
+﻿using Atelier.Cats.Application.Abstractions.Models;
 using System.Net;
 
 namespace Atelier.Cats.Application.Models
@@ -11,7 +11,7 @@ namespace Atelier.Cats.Application.Models
         }
     }
 
-    public class NoContent<TEntity> : AtelierResponseBase<TEntity>, IAtelierResponse<TEntity>
+    public class NoContent<TContent> : AtelierResponseBase<TContent>, IAtelierResponse<TContent>
     {
         public string ResourceUrl { get; set; }
 
@@ -20,7 +20,7 @@ namespace Atelier.Cats.Application.Models
             SetStatusCode(HttpStatusCode.NoContent);
         }
 
-        public NoContent(string errorMessage, TEntity content) : base(errorMessage, content)
+        public NoContent(string errorMessage, TContent content) : base(errorMessage, content)
         {
             SetStatusCode(HttpStatusCode.NoContent);
         }

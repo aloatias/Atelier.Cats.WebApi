@@ -1,4 +1,4 @@
-﻿using Atelier.Cats.Application.Interfaces;
+﻿using Atelier.Cats.Application.Abstractions.Services;
 using Atelier.Cats.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 

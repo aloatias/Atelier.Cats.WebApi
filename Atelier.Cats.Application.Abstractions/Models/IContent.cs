@@ -1,4 +1,4 @@
-﻿namespace Atelier.Cats.Application.Interfaces
+﻿namespace Atelier.Cats.Application.Abstractions.Models
 {
     public interface IContent<TEntity>
     {

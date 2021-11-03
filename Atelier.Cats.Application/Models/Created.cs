@@ -1,4 +1,4 @@
-﻿using Atelier.Cats.Application.Interfaces;
+﻿using Atelier.Cats.Application.Abstractions.Models;
 using System.Net;
 
 namespace Atelier.Cats.Application.Models
@@ -11,11 +11,11 @@ namespace Atelier.Cats.Application.Models
         }
     }
 
-    public class Created<TEntity> : AtelierResponseBase<TEntity>, IAtelierResponse<TEntity>
+    public class Created<TContent> : AtelierResponseBase<TContent>, IAtelierResponse<TContent>
     {
         public string ResourceUrl { get; set; }
         
-        public Created(TEntity content) : base(content)
+        public Created(TContent content) : base(content)
         {
             SetStatusCode(HttpStatusCode.OK);
         }

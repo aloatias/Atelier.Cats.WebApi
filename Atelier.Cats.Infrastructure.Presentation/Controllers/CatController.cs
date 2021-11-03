@@ -1,4 +1,4 @@
-﻿using Atelier.Cats.Application.Interfaces;
+﻿using Atelier.Cats.Application.Abstractions.Services;
 using Atelier.Cats.Infrastructure.Presentation.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

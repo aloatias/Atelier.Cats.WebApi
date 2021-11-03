@@ -1,9 +1,10 @@
-﻿using Atelier.Cats.Application.Interfaces;
+﻿using Atelier.Cats.Application.Abstractions.Models;
+using Atelier.Cats.Application.Abstractions.Services;
 using Atelier.Cats.Application.Models;
-using Atelier.Cats.Contracts;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.Application.Services
@@ -11,25 +12,48 @@ namespace Atelier.Cats.Application.Services
     public class ChallengeService : IChallengeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IDateGeneratorService _dateGeneratorService;
 
         public ChallengeService(
-            IUnitOfWork unitOfWork,
-            IDateGeneratorService dateGeneratorService)
+            IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _dateGeneratorService = dateGeneratorService;
         }
 
-        public async Task<IAtelierResponse<Guid>> AddAsync(ChallengeResultDto challengeResultDto)
+        public async Task<IAtelierResponse<Guid>> AddAsync(Challenge challenge)
         {
-            var challenge = new Challenge
+            // Check conflict
+            var challengeExist = await _unitOfWork.ChallengeRepository
+                .ExistsAsync(x => x.ChallengerOneId == challenge.ChallengerOneId
+                    && x.ChallengerTwoId == challenge.ChallengerTwoId
+                || x.ChallengerTwoId == challenge.ChallengerOneId
+                    && x.ChallengerOneId == challenge.ChallengerTwoId);
+
+            if (challengeExist)
             {
-                ChallengerOneId = challengeResultDto.ChallengerOneId,
-                ChallengerTwoId = challengeResultDto.ChallengerTwoId,
-                WinnerId = challengeResultDto.WinnerId,
-                VoteDate = _dateGeneratorService.GetDate()
-            };
+                return new Conflict<Guid>("These cats have already faced each other");
+            }
+
+            // Check existence
+            var contenderOne = await _unitOfWork.CatRepository.FindAsync(challenge.ChallengerOneId);
+            var contenderTwo = await _unitOfWork.CatRepository.FindAsync(challenge.ChallengerTwoId);
+
+            var sb = new StringBuilder();
+
+            if (contenderOne is null)
+            {
+                sb.Append($"The cat { challenge.ChallengerOneId } doesn't exist \r\n");
+            }
+
+            if (contenderTwo is null)
+            {
+                sb.Append($"The cat { challenge.ChallengerTwoId } doesn't exist");
+            }
+
+            if (contenderOne is null
+                || contenderTwo is null)
+            {
+                return new BadRequest<Guid>(sb.ToString());
+            }
 
             var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challenge);
             await _unitOfWork.CommitAsync();

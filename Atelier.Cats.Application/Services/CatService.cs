@@ -1,4 +1,5 @@
-﻿using Atelier.Cats.Application.Interfaces;
+﻿using Atelier.Cats.Application.Abstractions.Models;
+using Atelier.Cats.Application.Abstractions.Services;
 using Atelier.Cats.Application.Models;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;

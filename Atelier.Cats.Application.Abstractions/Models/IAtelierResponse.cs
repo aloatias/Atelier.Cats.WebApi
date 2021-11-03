@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Atelier.Cats.Application.Interfaces
+namespace Atelier.Cats.Application.Abstractions.Models
 {
     public interface IAtelierResponse : IFailure
     {

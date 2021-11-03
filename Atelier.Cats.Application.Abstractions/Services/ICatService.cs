@@ -1,9 +1,10 @@
-﻿using Atelier.Cats.Domain.Entities;
+﻿using Atelier.Cats.Application.Abstractions.Models;
+using Atelier.Cats.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Atelier.Cats.Application.Interfaces
+namespace Atelier.Cats.Application.Abstractions.Services
 {
     public interface ICatService
     {

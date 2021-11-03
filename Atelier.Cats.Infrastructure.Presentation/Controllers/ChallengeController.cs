@@ -1,5 +1,6 @@
-﻿using Atelier.Cats.Application.Interfaces;
+﻿using Atelier.Cats.Application.Abstractions.Services;
 using Atelier.Cats.Contracts;
+using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Infrastructure.Presentation.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,12 +14,15 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
     public class ChallengeController : AtelierControllerBase<ChallengeController>
     {
         private readonly IChallengeService _challengeService;
+        private readonly IDateGeneratorService _dateGeneratorService;
 
         public ChallengeController(
             ILogger<ChallengeController> logger,
-            IChallengeService challengeService) : base(logger)
+            IChallengeService challengeService,
+            IDateGeneratorService dateGeneratorService) : base(logger)
         {
             _challengeService = challengeService;
+            _dateGeneratorService = dateGeneratorService;
         }
 
         /// <summary>
@@ -31,7 +35,15 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                return SendResponse(await _challengeService.AddAsync(challengeResult));
+                var challengeToAdd = new Challenge
+                {
+                    ChallengerOneId = challengeResult.ChallengerOneId,
+                    ChallengerTwoId = challengeResult.ChallengerTwoId,
+                    WinnerId = challengeResult.WinnerId,
+                    VoteDate = _dateGeneratorService.GetDate()
+                };
+
+                return SendResponse(await _challengeService.AddAsync(challengeToAdd));
             }
             catch (Exception ex)
             {
