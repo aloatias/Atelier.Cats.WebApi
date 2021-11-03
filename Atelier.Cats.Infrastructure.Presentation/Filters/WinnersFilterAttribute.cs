@@ -25,8 +25,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Filters
 
             var result = new List<WinnerResultDto>();
 
-            (actionResult.Value as IAtelierResponse<List<Cat>>)?
-                .Content?
+            (actionResult.Value as List<Cat>)?
                 .ForEach(challenge =>
                 {
                     var fakeCatName = new Faker<WinnerResultDto>()

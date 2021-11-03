@@ -22,7 +22,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Filters
                 return;
             }
 
-            var partialResult = actionResult.Value as IAtelierResponse<Tuple<Cat, Cat>>;
+            var partialResult = actionResult.Value as Tuple<Cat, Cat>;
 
             var fakeCatNames = new Faker<WinnerResultDto>()
                     .RuleFor(x => x.Name, (f, u) => f.Name.FirstName())
@@ -32,18 +32,18 @@ namespace Atelier.Cats.Infrastructure.Presentation.Filters
             {
                 ContenderOne = new ContenderDto
                 {
-                    Id = partialResult.Content.Item1.Id,
-                    AtelierId = partialResult.Content.Item1.AtelierId,
+                    Id = partialResult.Item1.Id,
+                    AtelierId = partialResult.Item1.AtelierId,
                     Name = fakeCatNames[0].Name,
-                    Url = partialResult.Content.Item1.Url
+                    Url = partialResult.Item1.Url
                 },
 
                 ContenderTwo = new ContenderDto
                 {
-                    Id = partialResult.Content.Item2.Id,
-                    AtelierId = partialResult.Content.Item2.AtelierId,
+                    Id = partialResult.Item2.Id,
+                    AtelierId = partialResult.Item2.AtelierId,
                     Name = fakeCatNames[1].Name,
-                    Url = partialResult.Content.Item2.Url
+                    Url = partialResult.Item2.Url
                 }
             };
 

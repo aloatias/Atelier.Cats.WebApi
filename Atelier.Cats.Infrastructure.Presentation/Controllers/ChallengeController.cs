@@ -53,7 +53,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             try
             {
-                return Ok((await _challengeService.CountAsync()).Content);
+                return SendResponse(await _challengeService.CountAsync());
             }
             catch (Exception ex)
             {

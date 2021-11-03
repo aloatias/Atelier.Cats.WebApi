@@ -21,7 +21,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             switch (response.Status)
             {
                 case HttpStatusCode.OK:
-                    return Ok(response);
+                    return Ok();
                 case HttpStatusCode.BadRequest:
                     return BadRequest(response.ErrorMessage);
                 case HttpStatusCode.NoContent:
@@ -31,14 +31,14 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             }
         }
 
-        protected IActionResult SendResponse<TEntity>(IAtelierResponse<TEntity> response) where TEntity : AtelierEntityBase
+        protected IActionResult SendResponse<TEntity>(IAtelierResponse<TEntity> response)
         {
             switch (response.Status)
             {
                 case HttpStatusCode.OK:
                     return Ok(response.Content);
                 case HttpStatusCode.Created:
-                    return Created(response.ResourceUrl, response?.Content);
+                    return Created(response.ResourceUrl, response.Content);
                 case HttpStatusCode.BadRequest:
                     return BadRequest(response.ErrorMessage);
                 case HttpStatusCode.NoContent:
