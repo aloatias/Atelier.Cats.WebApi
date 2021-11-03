@@ -1,6 +1,5 @@
 ﻿using Atelier.Cats.Application.Interfaces;
 using Atelier.Cats.Contracts;
-using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Infrastructure.Presentation.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,6 +19,25 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             IChallengeService challengeService) : base(logger)
         {
             _challengeService = challengeService;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="challengeResult"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(ChallengeResultDto challengeResult)
+        {
+            try
+            {
+                return SendResponse(await _challengeService.AddAsync(challengeResult));
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex.StackTrace, ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -54,25 +72,6 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             try
             {
                 return SendResponse(await _challengeService.CountAsync());
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.StackTrace, ex.Message);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="challengeResult"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> AddAsync(ChallengeResultDto challengeResult)
-        {
-            try
-            {
-                return SendResponse(await _challengeService.AddAsync(challengeResult));
             }
             catch (Exception ex)
             {

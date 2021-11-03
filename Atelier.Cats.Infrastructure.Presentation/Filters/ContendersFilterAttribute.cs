@@ -1,5 +1,4 @@
-﻿using Atelier.Cats.Application.Interfaces;
-using Atelier.Cats.Contracts;
+﻿using Atelier.Cats.Contracts;
 using Atelier.Cats.Domain.Entities;
 using Bogus;
 using Microsoft.AspNetCore.Mvc;
