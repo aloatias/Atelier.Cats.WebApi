@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Atelier.Cats.Application.Abstractions\Atelier.Cats.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Contracts\Atelier.Cats.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
