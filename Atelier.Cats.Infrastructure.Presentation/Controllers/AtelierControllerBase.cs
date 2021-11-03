@@ -1,5 +1,4 @@
 ﻿using Atelier.Cats.Application.Interfaces;
-using Atelier.Cats.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Net;
