@@ -2,7 +2,7 @@
 
 namespace Atelier.Cats.Application.Abstractions.Models
 {
-    public interface IAtelierResponse : IFailure
+    public interface IAtelierResponse
     {
         HttpStatusCode Status { get; }
     }

@@ -1,6 +1,7 @@
 using Atelier.Cats.Application;
 using Atelier.Cats.Infrastructure.Persistence.Extensions;
 using Atelier.Cats.Infrastructure.Presentation;
+using Atelier.Cats.WebApi.Middleware;
 using Atelier.Gateway.Configuration;
 using Atelier.Gateway.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -72,6 +73,7 @@ namespace Atelier.Cats.WebApi
             app.UseCors(_policyName);
             app.UseAuthorization();
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -90,7 +92,7 @@ namespace Atelier.Cats.WebApi
             PersistenceConfiguration.InjectServices(services, Configuration);
 
             // Core Services
-            ApplicationConfiguration.InjectServices(services);
+            ApplicationExtensions.InjectServices(services);
 
             // Atelier Gateway
             GatewayConfiguration.InjectServices(services, Configuration);

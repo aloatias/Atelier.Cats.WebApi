@@ -32,7 +32,7 @@ namespace Atelier.Cats.Application.Services
 
             if (challengeExist)
             {
-                return new Conflict<Guid>("These cats have already faced each other");
+                throw new ConflictException("These cats have already faced each other");
             }
 
             // Check existence
@@ -54,7 +54,7 @@ namespace Atelier.Cats.Application.Services
             if (!contenderOneExists
                 || !contenderTwoExists)
             {
-                return new BadRequest<Guid>(sb.ToString());
+                throw new BadRequestException(sb.ToString());
             }
 
             var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challenge);
@@ -73,7 +73,7 @@ namespace Atelier.Cats.Application.Services
             var challenge = await _unitOfWork.ChallengeRepository.FindAsync(id);
             if (challenge is null)
             {
-                return new NoContent<Challenge>("The searched challenge wasn't found");
+                throw new NotFoundException("The searched challenge wasn't found");
             }
 
             return new Ok<Challenge>(challenge);

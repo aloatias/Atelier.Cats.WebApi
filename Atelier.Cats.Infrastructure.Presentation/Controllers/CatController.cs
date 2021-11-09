@@ -1,5 +1,4 @@
 ﻿using Atelier.Cats.Application.Abstractions.Services;
-using Atelier.Cats.Infrastructure.Presentation.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,18 +26,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("{id}")]
         [HttpGet]
-        [CatFilter]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            try
-            {
-                return SendResponse(await _catService.FindAsync(id));
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.StackTrace, ex.Message);
-                throw;
-            }
+            return Ok(await _catService.FindAsync(id));
         }
 
         /// <summary>
@@ -48,18 +38,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("atelier/{id}")]
         [HttpGet]
-        [CatFilter]
         public async Task<IActionResult> GetByAtelierIdAsync(string id)
         {
-            try
-            {
-                return SendResponse(await _catService.FindAsync(id));
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.StackTrace, ex.Message);
-                throw;
-            }
+            return Ok(await _catService.FindAsync(id));
         }
 
         /// <summary>
@@ -68,18 +49,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("Contenders")]
         [HttpGet]
-        [ContendersFilter]
         public async Task<IActionResult> GetContendersAsync()
         {
-            try
-            {
-                return SendResponse(await _catService.GetContendersAsync());
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.StackTrace, ex.Message);
-                throw;
-            }
+            return Ok(await _catService.GetContendersAsync());
         }
 
         /// <summary>
@@ -88,18 +60,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("Winners")]
         [HttpGet]
-        [WinnersFilter]
         public async Task<IActionResult> GetWinnersAsync()
         {
-            try
-            {
-                return SendResponse(await _catService.GetWinnersAsync());
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.StackTrace, ex.Message);
-                throw;
-            }
+            return Ok(await _catService.GetWinnersAsync());
         }
 
         /// <summary>
@@ -110,15 +73,8 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> ImportCatalogAsync()
         {
-            try
-            {
-                return SendResponse(await _catService.ImportCatsCatalogAsync());
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex.StackTrace, ex.Message);
-                throw;
-            }
+            await _catService.ImportCatsCatalogAsync();
+            return NoContent();
         }
     }
 }

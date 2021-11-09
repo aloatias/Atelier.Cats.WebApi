@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bogus" Version="33.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Atelier.Cats.Application.Abstractions\Atelier.Cats.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Contracts\Atelier.Cats.Contracts.csproj" />
     <ProjectReference Include="..\Atelier.Gateway\Atelier.Gateway.csproj" />
   </ItemGroup>
 

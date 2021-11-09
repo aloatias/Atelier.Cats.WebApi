@@ -1,11 +1,13 @@
-﻿using Atelier.Cats.Application.Abstractions.Models;
-using Atelier.Cats.Application.Abstractions.Services;
+﻿using Atelier.Cats.Application.Abstractions.Services;
+using Atelier.Cats.Application.Extensions;
 using Atelier.Cats.Application.Models;
+using Atelier.Cats.Contracts;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
 using Atelier.Gateway.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.Application.Services
@@ -26,46 +28,46 @@ namespace Atelier.Cats.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IAtelierResponse<Cat>> FindAsync(Guid id)
+        public async Task<CatDto> FindAsync(Guid id)
         {
             var cat = await _unitOfWork.CatRepository.FindAsync(id);
             if (cat is null)
             {
-                return new NoContent<Cat>("The searched cat wasn't found");
+                throw new NotFoundException("The searched cat wasn't found");
             }
 
-            return new Ok<Cat>(cat);
+            return cat.AsDto();
         }
 
-        public async Task<IAtelierResponse<Cat>> FindAsync(string atelierId)
+        public async Task<CatDto> FindAsync(string atelierId)
         {
             var cat = await _unitOfWork.CatRepository.FindAsync(x => x.AtelierId == atelierId);
             if (cat is null)
             {
-                return new NoContent<Cat>("The searched cat wasn't found");
+                throw new NotFoundException("The searched cat wasn't found");
             }
 
-            return new Ok<Cat>(cat);
+            return cat.AsDto();
         }
 
-        public async Task<IAtelierResponse<Tuple<Cat, Cat>>> GetContendersAsync()
+        public async Task<ContendersCoupleDto> GetContendersAsync()
         {
-            var contenders = await _unitOfWork.CatRepository.GetContendersAsync();
-            if (contenders.Item1 is null
-                || contenders.Item2 is null)
+            var contendersCouple = await _unitOfWork.CatRepository.GetContendersAsync();
+            if (contendersCouple.Item1 is null
+                || contendersCouple.Item2 is null)
             {
-                return new NoContent<Tuple<Cat, Cat>>("Not enough contenders where found");
+                throw new NotFoundException("Not enough contenders where found");
             }
 
-            return new Ok<Tuple<Cat, Cat>>(contenders);
+            return contendersCouple.AsDto();
         }
 
-        public async Task<IAtelierResponse<IEnumerable<Cat>>> GetWinnersAsync()
+        public async Task<IEnumerable<CatDto>> GetWinnersAsync()
         {
-            return new Ok<IEnumerable<Cat>>(await _unitOfWork.CatRepository.GetWinnersAsync());
+            return (await _unitOfWork.CatRepository.GetWinnersAsync()).Select(cat => cat.AsDto());
         }
 
-        public async Task<IAtelierResponse> ImportCatsCatalogAsync()
+        public async Task ImportCatsCatalogAsync()
         {
             var catsCatalog = await _gateway.GetCatsCatalogAsync();
 
@@ -78,8 +80,6 @@ namespace Atelier.Cats.Application.Services
 
             await _unitOfWork.CatRepository.AddAsync(catsToAdd);
             await _unitOfWork.CommitAsync();
-
-            return new Ok();
         }
     }
 }

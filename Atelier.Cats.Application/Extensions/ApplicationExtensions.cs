@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Atelier.Cats.Application
 {
-    public static class ApplicationConfiguration
+    public static class ApplicationExtensions
     {
         public static void InjectServices(this IServiceCollection services)
         {
