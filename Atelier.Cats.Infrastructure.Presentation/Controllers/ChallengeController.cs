@@ -13,12 +13,12 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
     public class ChallengeController : AtelierControllerBase<ChallengeController>
     {
         private readonly IChallengeService _challengeService;
-        private readonly IDateGeneratorService _dateGeneratorService;
+        private readonly IDateGenerator _dateGeneratorService;
 
         public ChallengeController(
             ILogger<ChallengeController> logger,
             IChallengeService challengeService,
-            IDateGeneratorService dateGeneratorService) : base(logger)
+            IDateGenerator dateGeneratorService) : base(logger)
         {
             _challengeService = challengeService;
             _dateGeneratorService = dateGeneratorService;
@@ -30,19 +30,11 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <param name="challengeResult"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddAsync(ChallengeResultDto challengeResult)
+        public async Task<IActionResult> AddAsync(ChallengeCreationDto challengeResult)
         {
-            var challengeToAdd = new Challenge
-            {
-                ChallengerOneId = challengeResult.ChallengerOneId,
-                ChallengerTwoId = challengeResult.ChallengerTwoId,
-                WinnerId = challengeResult.WinnerId,
-                VoteDate = _dateGeneratorService.GetDate()
-            };
+            var createdChallenge = await _challengeService.AddAsync(challengeResult);
 
-            var createdChallenge = await _challengeService.AddAsync(challengeToAdd);
-
-            return CreatedAtAction(nameof(GetAsync), new { id = createdChallenge.Content, createdChallenge });
+            return CreatedAtAction(nameof(GetAsync), new { id = createdChallenge.Id, createdChallenge });
         }
 
         /// <summary>

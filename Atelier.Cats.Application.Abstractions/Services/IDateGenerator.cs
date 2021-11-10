@@ -2,7 +2,7 @@
 
 namespace Atelier.Cats.Application.Abstractions.Services
 {
-    public interface IDateGeneratorService
+    public interface IDateGenerator
     {
         DateTime GetDate();
     }

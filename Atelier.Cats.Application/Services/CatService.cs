@@ -15,12 +15,12 @@ namespace Atelier.Cats.Application.Services
     public class CatService : ICatService
     {
         private readonly IAtelierCatsGateway _gateway;
-        private readonly IDateGeneratorService _dateGeneratorService;
+        private readonly IDateGenerator _dateGeneratorService;
         private readonly IUnitOfWork _unitOfWork;
 
         public CatService(
             IAtelierCatsGateway gateway,
-            IDateGeneratorService dateGeneratorService,
+            IDateGenerator dateGeneratorService,
             IUnitOfWork unitOfWork)
         {
             _gateway = gateway;

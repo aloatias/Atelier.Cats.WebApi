@@ -1,9 +1,9 @@
 ﻿using Atelier.Cats.Application.Abstractions.Services;
 using System;
 
-namespace Atelier.Cats.Application.Services
+namespace Atelier.Cats.Application.Common
 {
-    public class DateGeneratorService : IDateGeneratorService
+    public class DateGenerator : IDateGenerator
     {
         public DateTime GetDate() => DateTime.Now;
     }

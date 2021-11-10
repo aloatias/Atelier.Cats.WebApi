@@ -41,5 +41,17 @@ namespace Atelier.Cats.Application.Extensions
                 }
             };
         }
+
+        public static ChallengeDto AsDto(this Challenge challenge)
+        {
+            return new ChallengeDto
+            {
+                Id = challenge.Id,
+                ChallengerOneId = challenge.ChallengerOneId,
+                ChallengerTwoId = challenge.ChallengerTwoId,
+                WinnerId = challenge.WinnerId,
+                VoteDate = challenge.VoteDate
+            };
+        }
     }
 }

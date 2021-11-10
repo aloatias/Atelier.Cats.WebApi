@@ -2,7 +2,7 @@
 
 namespace Atelier.Cats.Contracts
 {
-    public class ChallengeResultDto
+    public class ChallengeCreationDto
     {
         public Guid ChallengerOneId { get; set; }
         public Guid ChallengerTwoId { get; set; }

@@ -1,6 +1,7 @@
-﻿using Atelier.Cats.Application.Abstractions.Models;
-using Atelier.Cats.Application.Abstractions.Services;
+﻿using Atelier.Cats.Application.Abstractions.Services;
+using Atelier.Cats.Application.Extensions;
 using Atelier.Cats.Application.Models;
+using Atelier.Cats.Contracts;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
 using System;
@@ -12,14 +13,17 @@ namespace Atelier.Cats.Application.Services
     public class ChallengeService : IChallengeService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IDateGenerator _dateGenerator;
 
         public ChallengeService(
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IDateGenerator dateGenerator)
         {
             _unitOfWork = unitOfWork;
+            _dateGenerator = dateGenerator;
         }
 
-        public async Task<IAtelierResponse<Guid>> AddAsync(Challenge challenge)
+        public async Task<ChallengeDto> AddAsync(ChallengeCreationDto challenge)
         {
             // Check date not null
 
@@ -57,18 +61,32 @@ namespace Atelier.Cats.Application.Services
                 throw new BadRequestException(sb.ToString());
             }
 
-            var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challenge);
+            if (challenge.WinnerId != challenge.ChallengerOneId
+                && challenge.WinnerId != challenge.ChallengerTwoId)
+            {
+                throw new BadRequestException("The challenge's winner must be one of the contenders");
+            }
+
+            var challengeToCreate = new Challenge
+            {
+                ChallengerOneId = challenge.ChallengerOneId,
+                ChallengerTwoId = challenge.ChallengerTwoId,
+                WinnerId = challenge.WinnerId,
+                VoteDate = _dateGenerator.GetDate()
+            };
+
+            var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challengeToCreate);
             await _unitOfWork.CommitAsync();
 
-            return new Created<Guid>(createdChallenge.Id);
+            return createdChallenge.AsDto();
         }
 
-        public async Task<IAtelierResponse<int>> CountAsync()
+        public Task<int> CountAsync()
         {
-            return new Ok<int>(await _unitOfWork.ChallengeRepository.CountAsync());
+            return _unitOfWork.ChallengeRepository.CountAsync();
         }
 
-        public async Task<IAtelierResponse<Challenge>> FindAsync(Guid id)
+        public async Task<ChallengeDto> FindAsync(Guid id)
         {
             var challenge = await _unitOfWork.ChallengeRepository.FindAsync(id);
             if (challenge is null)
@@ -76,7 +94,7 @@ namespace Atelier.Cats.Application.Services
                 throw new NotFoundException("The searched challenge wasn't found");
             }
 
-            return new Ok<Challenge>(challenge);
+            return challenge.AsDto();
         }
     }
 }

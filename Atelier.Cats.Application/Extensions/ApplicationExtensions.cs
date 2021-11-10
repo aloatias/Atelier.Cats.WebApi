@@ -1,4 +1,5 @@
 ﻿using Atelier.Cats.Application.Abstractions.Services;
+using Atelier.Cats.Application.Common;
 using Atelier.Cats.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +11,7 @@ namespace Atelier.Cats.Application
         {
             services.AddScoped<ICatService, CatService>();
             services.AddScoped<IChallengeService, ChallengeService>();
-            services.AddScoped<IDateGeneratorService, DateGeneratorService>();
+            services.AddScoped<IDateGenerator, DateGenerator>();
         }
     }
 }
