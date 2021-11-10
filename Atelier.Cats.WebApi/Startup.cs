@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Atelier.Cats.WebApi
@@ -27,6 +28,8 @@ namespace Atelier.Cats.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
+
             services.AddControllers()
                 .AddApplicationPart(typeof(AssemblyReference).Assembly);
 
@@ -46,7 +49,6 @@ namespace Atelier.Cats.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atelier.Cats.WebApi", Version = "v1" });
             });
 
-            services.AddLogging();
             services.AddApplicationInsightsTelemetry(Configuration["APPLICATIONINSIGHTS_CONNECTIONSTRING"]);
 
             InjectCustomServices(services);
