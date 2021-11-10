@@ -1,5 +1,6 @@
 ﻿using Atelier.Cats.Application.Abstractions.Services;
 using Atelier.Cats.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,12 +30,15 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <param name="challengeResult"></param>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> AddAsync(ChallengeCreationDto challengeResult)
         {
             var createdChallenge = await _challengeService.AddAsync(challengeResult);
 
-            return CreatedAtRoute("", new { id = createdChallenge.Id });
-            //return Created("", createdChallenge.Id);
+            return Created("", new { id = createdChallenge.Id });
         }
 
         /// <summary>
@@ -44,17 +48,22 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             return Ok(await _challengeService.FindAsync(id));
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         [Route("TotalVotes")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetTotalVotesAsync()
         {
             return Ok(await _challengeService.CountAsync());

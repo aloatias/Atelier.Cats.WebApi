@@ -1,7 +1,10 @@
 ﻿using Atelier.Cats.Application.Abstractions.Services;
+using Atelier.Cats.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.Infrastructure.Presentation.Controllers
@@ -26,6 +29,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("{id}")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             return Ok(await _catService.FindAsync(id));
@@ -38,6 +44,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("atelier/{id}")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByAtelierIdAsync(string id)
         {
             return Ok(await _catService.FindAsync(id));
@@ -49,6 +58,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("Contenders")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContendersCoupleDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetContendersAsync()
         {
             return Ok(await _catService.GetContendersAsync());
@@ -60,6 +72,8 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("Winners")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatDto>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetWinnersAsync()
         {
             return Ok(await _catService.GetWinnersAsync());
@@ -71,6 +85,8 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("Catalog")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> ImportCatalogAsync()
         {
             await _catService.ImportCatsCatalogAsync();
