@@ -10,7 +10,7 @@ namespace Atelier.Cats.Application.Abstractions.Services
         Task<CatDetailsDto> FindAsync(Guid id);
         Task<CatDetailsDto> FindAsync(string atelierId);
         Task<ContendersCoupleDto> GetContendersAsync();
-        Task<IEnumerable<CatDetailsDto>> GetWinnersAsync();
+        Task<IEnumerable<WinnerDto>> GetWinnersAsync();
         Task ImportCatsCatalogAsync();
     }
 }

@@ -5,6 +5,7 @@ using Atelier.Cats.Contracts;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
 using Atelier.Gateway.Interfaces;
+using Bogus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,9 +63,18 @@ namespace Atelier.Cats.Application.Services
             return contendersCouple.AsDto();
         }
 
-        public async Task<IEnumerable<CatDetailsDto>> GetWinnersAsync()
+        public async Task<IEnumerable<WinnerDto>> GetWinnersAsync()
         {
-            return (await _unitOfWork.CatRepository.GetWinnersAsync()).Select(cat => cat.AsDto());
+            var faker = new Faker();
+
+            return (await _unitOfWork.CatRepository.GetWinnersAsync())
+                .Select(cat =>
+                    new WinnerDto
+                    {
+                        Name = faker.Name.FirstName(),
+                        Url = cat.Url,
+                        Votes = cat.ChallengesWinner?.Count() ?? 0
+                    });
         }
 
         public async Task ImportCatsCatalogAsync()
