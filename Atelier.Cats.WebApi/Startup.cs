@@ -1,5 +1,3 @@
-using Atelier.Cats.Application;
-using Atelier.Cats.Infrastructure.Persistence.Extensions;
 using Atelier.Cats.Infrastructure.Presentation;
 using Atelier.Cats.WebApi.Middleware;
 using Atelier.Gateway.Configuration;
