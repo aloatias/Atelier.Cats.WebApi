@@ -2,7 +2,7 @@
 
 namespace Atelier.Cats.WebApi.Models
 {
-    public class ErrorDetails
+    public class ExceptionDetails
     {
         public int StatusCode { get; set; }
         public string Message { get; set; }

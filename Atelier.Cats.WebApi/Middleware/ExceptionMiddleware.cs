@@ -45,7 +45,7 @@ namespace Atelier.Cats.WebApi.Middleware
                 _ => "Internal Server Error from the custom middleware."
             };
 
-            await context.Response.WriteAsync(new ErrorDetails()
+            await context.Response.WriteAsync(new ExceptionDetails()
             {
                 StatusCode = context.Response.StatusCode,
                 Message = message
