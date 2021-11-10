@@ -8,7 +8,6 @@ namespace Atelier.Cats.Contracts
         public string AtelierId { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
-        public int Votes { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime LastUpdate { get; set; }
     }
