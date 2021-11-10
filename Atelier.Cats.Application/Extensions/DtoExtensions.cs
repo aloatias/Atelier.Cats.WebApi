@@ -2,20 +2,25 @@
 using Atelier.Cats.Domain.Entities;
 using Bogus;
 using System;
+using System.Linq;
 
 namespace Atelier.Cats.Application.Extensions
 {
     public static class DtoExtensions
     {
-        public static CatDto AsDto(this Cat cat)
+        public static CatDetailsDto AsDto(this Cat cat)
         {
-            return new CatDto
+            var nameFaker = new Faker();
+
+            return new CatDetailsDto
             {
                 Id = cat.Id,
                 AtelierId = cat.AtelierId,
+                Name = nameFaker.Name.FirstName(),
                 Url = cat.Url,
                 CreationDate = cat.CreationDate,
-                LastUpdate = cat.LastUpdate
+                LastUpdate = cat.LastUpdate,
+                Votes = cat.ChallengesWinner.Count()
             };
         }
 
@@ -42,9 +47,9 @@ namespace Atelier.Cats.Application.Extensions
             };
         }
 
-        public static ChallengeDto AsDto(this Challenge challenge)
+        public static ChallengeDetailsDto AsDto(this Challenge challenge)
         {
-            return new ChallengeDto
+            return new ChallengeDetailsDto
             {
                 Id = challenge.Id,
                 ChallengerOneId = challenge.ChallengerOneId,

@@ -29,7 +29,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("{id}")]
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAsync(Guid id)
@@ -44,7 +44,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("atelier/{id}")]
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByAtelierIdAsync(string id)
@@ -72,7 +72,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// <returns></returns>
         [Route("Winners")]
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatDetailsDto>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetWinnersAsync()
         {

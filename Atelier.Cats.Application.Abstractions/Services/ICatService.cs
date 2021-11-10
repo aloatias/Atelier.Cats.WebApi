@@ -7,10 +7,10 @@ namespace Atelier.Cats.Application.Abstractions.Services
 {
     public interface ICatService
     {
-        Task<CatDto> FindAsync(Guid id);
-        Task<CatDto> FindAsync(string atelierId);
+        Task<CatDetailsDto> FindAsync(Guid id);
+        Task<CatDetailsDto> FindAsync(string atelierId);
         Task<ContendersCoupleDto> GetContendersAsync();
-        Task<IEnumerable<CatDto>> GetWinnersAsync();
+        Task<IEnumerable<CatDetailsDto>> GetWinnersAsync();
         Task ImportCatsCatalogAsync();
     }
 }

@@ -28,7 +28,7 @@ namespace Atelier.Cats.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<CatDto> FindAsync(Guid id)
+        public async Task<CatDetailsDto> FindAsync(Guid id)
         {
             var cat = await _unitOfWork.CatRepository.FindAsync(id);
             if (cat is null)
@@ -39,7 +39,7 @@ namespace Atelier.Cats.Application.Services
             return cat.AsDto();
         }
 
-        public async Task<CatDto> FindAsync(string atelierId)
+        public async Task<CatDetailsDto> FindAsync(string atelierId)
         {
             var cat = await _unitOfWork.CatRepository.FindAsync(x => x.AtelierId == atelierId);
             if (cat is null)
@@ -62,7 +62,7 @@ namespace Atelier.Cats.Application.Services
             return contendersCouple.AsDto();
         }
 
-        public async Task<IEnumerable<CatDto>> GetWinnersAsync()
+        public async Task<IEnumerable<CatDetailsDto>> GetWinnersAsync()
         {
             return (await _unitOfWork.CatRepository.GetWinnersAsync()).Select(cat => cat.AsDto());
         }

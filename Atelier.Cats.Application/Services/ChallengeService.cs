@@ -23,7 +23,7 @@ namespace Atelier.Cats.Application.Services
             _dateGenerator = dateGenerator;
         }
 
-        public async Task<ChallengeDto> AddAsync(ChallengeCreationDto challenge)
+        public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
         {
             // Check date not null
 
@@ -86,7 +86,7 @@ namespace Atelier.Cats.Application.Services
             return _unitOfWork.ChallengeRepository.CountAsync();
         }
 
-        public async Task<ChallengeDto> FindAsync(Guid id)
+        public async Task<ChallengeDetailsDto> FindAsync(Guid id)
         {
             var challenge = await _unitOfWork.ChallengeRepository.FindAsync(id);
             if (challenge is null)

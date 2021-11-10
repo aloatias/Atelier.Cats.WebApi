@@ -6,8 +6,8 @@ namespace Atelier.Cats.Application.Abstractions.Services
 {
     public interface IChallengeService
     {
-        Task<ChallengeDto> AddAsync(ChallengeCreationDto challenge);
+        Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge);
         Task<int> CountAsync();
-        Task<ChallengeDto> FindAsync(Guid id);
+        Task<ChallengeDetailsDto> FindAsync(Guid id);
     }
 }
