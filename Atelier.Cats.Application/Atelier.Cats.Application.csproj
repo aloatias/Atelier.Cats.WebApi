@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="33.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atelier.Cats.Application.Abstractions\Atelier.Cats.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Contracts\Atelier.Cats.Contracts.csproj" />
+    <ProjectReference Include="..\Atelier.Gateway\Atelier.Gateway.csproj" />
+  </ItemGroup>
+
+</Project>

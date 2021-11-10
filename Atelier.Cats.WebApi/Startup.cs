@@ -1,5 +1,7 @@
-using Atelier.Cats.DataAccess.Extensions;
-using Atelier.Cats.WebApi.Extensions;
+using Atelier.Cats.Application;
+using Atelier.Cats.Infrastructure.Persistence.Extensions;
+using Atelier.Cats.Infrastructure.Presentation;
+using Atelier.Cats.WebApi.Middleware;
 using Atelier.Gateway.Configuration;
 using Atelier.Gateway.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Atelier.Cats.WebApi
@@ -25,6 +28,11 @@ namespace Atelier.Cats.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
+
+            services.AddControllers()
+                .AddApplicationPart(typeof(AssemblyReference).Assembly);
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy(name: _policyName, builder =>
@@ -41,15 +49,9 @@ namespace Atelier.Cats.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atelier.Cats.WebApi", Version = "v1" });
             });
 
-            services.AddLogging();
             services.AddApplicationInsightsTelemetry(Configuration["APPLICATIONINSIGHTS_CONNECTIONSTRING"]);
 
             InjectCustomServices(services);
-
-            services.AddControllersWithViews()
-                .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +70,7 @@ namespace Atelier.Cats.WebApi
             app.UseCors(_policyName);
             app.UseAuthorization();
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -82,14 +85,14 @@ namespace Atelier.Cats.WebApi
 
         private void InjectCustomServices(IServiceCollection services)
         {
-            // Data Access
-            DataAccessConfiguration.InjectServices(services, Configuration);
+            // Persistence
+            PersistenceServicesExtensions.InjectServices(services, Configuration);
 
             // Core Services
-            CoreServicesConfiguration.ConfigureServices(services);
+            ÂpplicationServicesExtensions.InjectServices(services);
 
             // Atelier Gateway
-            CatsGatewayConfiguration.InjectServices(services, Configuration);
+            GatewayConfigurationServicesExtensions.InjectServices(services, Configuration);
 
             // Configuration
             services.Configure<AtelierCatsUrlOptions>(Configuration.GetSection("Urls"));
