@@ -20,7 +20,7 @@ namespace Atelier.Cats.Application.Extensions
                 Url = cat.Url,
                 CreationDate = cat.CreationDate,
                 LastUpdate = cat.LastUpdate,
-                Votes = cat.ChallengesWinner.Count()
+                Votes = cat.ChallengesWinner?.Count() ?? 0
             };
         }
 
