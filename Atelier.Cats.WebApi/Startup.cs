@@ -89,10 +89,10 @@ namespace Atelier.Cats.WebApi
         private void InjectCustomServices(IServiceCollection services)
         {
             // Persistence
-            PersistenceConfiguration.InjectServices(services, Configuration);
+            Infrastructure.Persistence.Extensions.ConfigurationExtensions.InjectServices(services, Configuration);
 
             // Core Services
-            ApplicationExtensions.InjectServices(services);
+            Application.ConfigurationExtensions.InjectServices(services);
 
             // Atelier Gateway
             GatewayConfiguration.InjectServices(services, Configuration);
