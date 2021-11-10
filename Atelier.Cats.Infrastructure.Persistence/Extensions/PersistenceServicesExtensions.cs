@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Atelier.Cats.Infrastructure.Persistence.Extensions
 {
-    public static class ConfigurationExtensions
+    public static class PersistenceServicesExtensions
     {
         public static void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
