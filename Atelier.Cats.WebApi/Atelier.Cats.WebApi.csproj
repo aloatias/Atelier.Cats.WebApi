@@ -5,22 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Filters\GetContendersFilterAttribute.cs~RF1ff5ea8e.TMP" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Bogus" Version="33.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.18.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atelier.Cats.DataAccess\Atelier.Cats.DataAccess.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Application\Atelier.Cats.Application.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Infrastructure.Persistence\Atelier.Cats.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Atelier.Cats.Infrastructure.Presentation\Atelier.Cats.Infrastructure.Presentation.csproj" />
     <ProjectReference Include="..\Atelier.Gateway\Atelier.Gateway.csproj" />
   </ItemGroup>
 
