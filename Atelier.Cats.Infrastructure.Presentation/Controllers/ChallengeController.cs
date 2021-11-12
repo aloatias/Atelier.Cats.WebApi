@@ -1,5 +1,5 @@
-﻿using Atelier.Cats.Application.Abstractions.Services;
-using Atelier.Cats.Contracts;
+﻿using Atelier.Cats.Domain.Dtos;
+using Atelier.Cats.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

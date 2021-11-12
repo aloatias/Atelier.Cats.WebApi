@@ -88,7 +88,7 @@ namespace Atelier.Cats.WebApi
             PersistenceServicesExtensions.InjectServices(services, Configuration);
 
             // Core Services
-            ÂpplicationServicesExtensions.InjectServices(services);
+            ApplicationServicesExtensions.InjectServices(services);
 
             // Atelier Gateway
             GatewayConfigurationServicesExtensions.InjectServices(services, Configuration);
