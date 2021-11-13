@@ -13,15 +13,12 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
     public class ChallengeController : AtelierControllerBase<ChallengeController>
     {
         private readonly IChallengeService _challengeService;
-        private readonly IDateGenerator _dateGeneratorService;
 
         public ChallengeController(
             ILogger<ChallengeController> logger,
-            IChallengeService challengeService,
-            IDateGenerator dateGeneratorService) : base(logger)
+            IChallengeService challengeService) : base(logger)
         {
             _challengeService = challengeService;
-            _dateGeneratorService = dateGeneratorService;
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         ///
         /// </summary>
         /// <returns></returns>
-        [Route("totalVotes")]
+        [Route("total-votes")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
