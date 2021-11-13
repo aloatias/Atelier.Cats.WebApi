@@ -56,7 +56,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("Contenders")]
+        [Route("contenders")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContendersCoupleDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -70,7 +70,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("Winners")]
+        [Route("winners")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatDetailsDto>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -83,7 +83,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("Catalog")]
+        [Route("catalog")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

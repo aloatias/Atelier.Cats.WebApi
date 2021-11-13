@@ -60,7 +60,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         ///
         /// </summary>
         /// <returns></returns>
-        [Route("TotalVotes")]
+        [Route("totalVotes")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
