@@ -25,8 +25,6 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
         {
-            // Check date not null
-
             // Check conflict
             var challengeExist = await _unitOfWork.ChallengeRepository
                 .ExistsAsync(x => x.ChallengerOneId == challenge.ChallengerOneId
