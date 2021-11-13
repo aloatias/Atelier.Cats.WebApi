@@ -91,7 +91,7 @@ namespace Atelier.Cats.WebApi
             ApplicationServicesExtensions.InjectServices(services);
 
             // Atelier Gateway
-            GatewayConfigurationServicesExtensions.InjectServices(services, Configuration);
+            GatewayServicesExtensions.InjectServices(services, Configuration);
 
             // Configuration
             services.Configure<AtelierCatsUrlOptions>(Configuration.GetSection("Urls"));
