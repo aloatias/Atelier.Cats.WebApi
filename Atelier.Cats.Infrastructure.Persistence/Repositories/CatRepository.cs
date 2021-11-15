@@ -19,8 +19,7 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
 
         public async Task<Tuple<Cat, Cat>> GetContendersAsync()
         {
-            Cat firstContender = null;
-            Cat secondContender = null;
+            Cat firstContender = null, secondContender = null;
 
             if (await EntitySet.AnyAsync())
             {
