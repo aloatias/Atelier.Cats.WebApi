@@ -1,5 +1,4 @@
 ﻿using Atelier.Cats.Application.Models;
-using Atelier.Cats.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -38,11 +37,12 @@ namespace Atelier.Cats.WebApi.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)exception.HttpStatusCode;
 
-            await context.Response.WriteAsync(new ExceptionDetails()
-            {
-                StatusCode = context.Response.StatusCode,
-                Message = exception.Message
-            }.ToString());
+            await context.Response.WriteAsync(
+                new ExceptionDetails()
+                {
+                    StatusCode = context.Response.StatusCode,
+                    Message = exception.Message
+                }.ToString());
         }
     }
 }
