@@ -6,7 +6,7 @@ using System;
 
 namespace Atelier.Gateway.Extensions
 {
-    public static class GatewayConfigurationServicesExtensions
+    public static class GatewayServicesExtensions
     {
         private const string _baseUrlSection = "Urls:Base";
 

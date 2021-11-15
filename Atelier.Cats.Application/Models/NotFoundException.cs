@@ -6,7 +6,7 @@ namespace Atelier.Cats.Application.Models
     {
         public NotFoundException(string errorMessage) : base(errorMessage)
         {
-            SetStatusCode(HttpStatusCode.NoContent);
+            SetStatusCode(HttpStatusCode.NotFound);
         }
     }
 }

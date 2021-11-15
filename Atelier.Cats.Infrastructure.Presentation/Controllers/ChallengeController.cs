@@ -1,5 +1,5 @@
-﻿using Atelier.Cats.Application.Abstractions.Services;
-using Atelier.Cats.Contracts;
+﻿using Atelier.Cats.Domain.Dtos;
+using Atelier.Cats.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,15 +13,12 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
     public class ChallengeController : AtelierControllerBase<ChallengeController>
     {
         private readonly IChallengeService _challengeService;
-        private readonly IDateGenerator _dateGeneratorService;
 
         public ChallengeController(
             ILogger<ChallengeController> logger,
-            IChallengeService challengeService,
-            IDateGenerator dateGeneratorService) : base(logger)
+            IChallengeService challengeService) : base(logger)
         {
             _challengeService = challengeService;
-            _dateGeneratorService = dateGeneratorService;
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         ///
         /// </summary>
         /// <returns></returns>
-        [Route("TotalVotes")]
+        [Route("total-votes")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

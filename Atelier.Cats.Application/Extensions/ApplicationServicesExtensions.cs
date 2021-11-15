@@ -1,11 +1,11 @@
-﻿using Atelier.Cats.Application.Abstractions.Services;
-using Atelier.Cats.Application.Common;
+﻿using Atelier.Cats.Application.Common;
 using Atelier.Cats.Application.Services;
+using Atelier.Cats.Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Atelier.Cats.Application
 {
-    public static class ÂpplicationServicesExtensions
+    public static class ApplicationServicesExtensions
     {
         public static void InjectServices(this IServiceCollection services)
         {

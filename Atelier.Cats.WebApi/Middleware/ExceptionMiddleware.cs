@@ -27,28 +27,21 @@ namespace Atelier.Cats.WebApi.Middleware
             }
             catch (AtelierExceptionBase ex)
             {
-                await HandleExceptionAsync(httpContext, ex);
+                await HandleCustomExceptionAsync(httpContext, ex);
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, AtelierExceptionBase exception)
+        private async Task HandleCustomExceptionAsync(HttpContext context, AtelierExceptionBase exception)
         {
             _logger.LogError($"Logs ===> Message: { exception.Message }, Stack Trace: { exception.StackTrace }");
-            
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)exception.HttpStatusCode;
-            var message = exception switch
-            {
-                BadRequestException => exception.Message,
-                NotFoundException => exception.Message,
-                ConflictException => exception.Message,
-                _ => "Internal Server Error from the custom middleware."
-            };
 
             await context.Response.WriteAsync(new ExceptionDetails()
             {
                 StatusCode = context.Response.StatusCode,
-                Message = message
+                Message = exception.Message
             }.ToString());
         }
     }

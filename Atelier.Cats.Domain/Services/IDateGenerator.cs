@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atelier.Cats.Application.Abstractions.Services
+namespace Atelier.Cats.Domain.Services
 {
     public interface IDateGenerator
     {
