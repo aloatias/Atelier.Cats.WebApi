@@ -1,8 +1,8 @@
-﻿using Atelier.Cats.Contracts;
+﻿using Atelier.Cats.Domain.Dtos;
 using System;
 using System.Threading.Tasks;
 
-namespace Atelier.Cats.Application.Abstractions.Services
+namespace Atelier.Cats.Domain.Services
 {
     public interface IChallengeService
     {

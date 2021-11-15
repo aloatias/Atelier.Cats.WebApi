@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atelier.Cats.Contracts
+namespace Atelier.Cats.Domain.Dtos
 {
     public class CatDetailsDto
     {

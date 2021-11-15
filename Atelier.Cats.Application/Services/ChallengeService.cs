@@ -1,9 +1,9 @@
-﻿using Atelier.Cats.Application.Abstractions.Services;
-using Atelier.Cats.Application.Extensions;
+﻿using Atelier.Cats.Application.Extensions;
 using Atelier.Cats.Application.Models;
-using Atelier.Cats.Contracts;
+using Atelier.Cats.Domain.Dtos;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
+using Atelier.Cats.Domain.Services;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +25,6 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
         {
-            // Check date not null
-
             // Check conflict
             var challengeExist = await _unitOfWork.ChallengeRepository
                 .ExistsAsync(x => x.ChallengerOneId == challenge.ChallengerOneId
