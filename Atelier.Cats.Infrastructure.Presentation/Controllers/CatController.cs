@@ -34,7 +34,6 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            throw new Exception("asdf");
             return Ok(await _catService.FindAsync(id));
         }
 
