@@ -50,9 +50,8 @@ namespace Atelier.Cats.Application.Extensions
             return new ChallengeDetailsDto
             {
                 Id = challenge.Id,
-                ChallengerOneId = challenge.ChallengerOneId,
-                ChallengerTwoId = challenge.ChallengerTwoId,
                 WinnerId = challenge.WinnerId,
+                LoserId = challenge.LoserId,
                 VoteDate = challenge.VoteDate
             };
         }

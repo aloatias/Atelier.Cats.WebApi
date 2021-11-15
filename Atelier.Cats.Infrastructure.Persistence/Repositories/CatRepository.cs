@@ -41,10 +41,10 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
                 bool existingChallenge = await _context
                     .Set<Challenge>()
                     .AnyAsync(x =>
-                    x.ChallengerOneId == firstContender.Id
-                        && x.ChallengerTwoId == secondContender.Id
-                    || x.ChallengerTwoId == firstContender.Id
-                        && x.ChallengerOneId == firstContender.Id);
+                    x.WinnerId == firstContender.Id
+                        && x.LoserId == secondContender.Id
+                    || x.LoserId == firstContender.Id
+                        && x.WinnerId == firstContender.Id);
 
                 if (!existingChallenge)
                 {

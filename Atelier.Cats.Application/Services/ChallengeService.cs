@@ -26,31 +26,30 @@ namespace Atelier.Cats.Application.Services
         public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
         {
             // Check conflict
-            var challengeExist = await _unitOfWork.ChallengeRepository
-                .ExistsAsync(x => x.ChallengerOneId == challenge.ChallengerOneId
-                    && x.ChallengerTwoId == challenge.ChallengerTwoId
-                || x.ChallengerTwoId == challenge.ChallengerOneId
-                    && x.ChallengerOneId == challenge.ChallengerTwoId);
+            var challengeExists = await _unitOfWork.ChallengeRepository
+                .ExistsAsync(x =>
+                    x.WinnerId == challenge.WinnerId && x.LoserId == challenge.LoserId
+                    || x.WinnerId == challenge.LoserId && x.LoserId == challenge.WinnerId);
 
-            if (challengeExist)
+            if (challengeExists)
             {
                 throw new ConflictException("These cats have already faced each other");
             }
 
             // Check existence
-            var contenderOneExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.ChallengerOneId);
-            var contenderTwoExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.ChallengerTwoId);
+            var contenderOneExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.WinnerId);
+            var contenderTwoExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.LoserId);
 
             var sb = new StringBuilder();
 
             if (!contenderOneExists)
             {
-                sb.Append($"The cat { challenge.ChallengerOneId } doesn't exist \r\n");
+                sb.Append($"The cat { challenge.WinnerId } doesn't exist \r\n");
             }
 
             if (!contenderTwoExists)
             {
-                sb.Append($"The cat { challenge.ChallengerTwoId } doesn't exist");
+                sb.Append($"The cat { challenge.LoserId } doesn't exist");
             }
 
             if (!contenderOneExists
@@ -59,17 +58,10 @@ namespace Atelier.Cats.Application.Services
                 throw new BadRequestException(sb.ToString());
             }
 
-            if (challenge.WinnerId != challenge.ChallengerOneId
-                && challenge.WinnerId != challenge.ChallengerTwoId)
-            {
-                throw new BadRequestException("The challenge's winner must be one of the contenders");
-            }
-
             var challengeToCreate = new Challenge
             {
-                ChallengerOneId = challenge.ChallengerOneId,
-                ChallengerTwoId = challenge.ChallengerTwoId,
                 WinnerId = challenge.WinnerId,
+                LoserId = challenge.LoserId,
                 VoteDate = _dateGenerator.GetDate()
             };
 
