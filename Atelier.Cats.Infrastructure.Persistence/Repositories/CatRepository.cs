@@ -17,11 +17,6 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public Task<Cat> FindByAtelierIdAsync(string id)
-        {
-            return EntitySet.FirstOrDefaultAsync(x => x.AtelierId == id);
-        }
-
         public async Task<Tuple<Cat, Cat>> GetContendersAsync()
         {
             Cat firstContender = null;
@@ -32,9 +27,9 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
                 while (true)
                 {
                     var contenders = await EntitySet?
-                    .OrderBy(x => Guid.NewGuid())
-                    .Take(2)
-                    .ToArrayAsync();
+                        .OrderBy(x => Guid.NewGuid())
+                        .Take(2)
+                        .ToArrayAsync();
 
                     var existingChallenge = await _context.Set<Challenge>()
                         .AnyAsync(x => contenders.Contains(x.Winner)
