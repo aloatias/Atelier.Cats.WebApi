@@ -27,7 +27,7 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             Cat firstContender = null;
             Cat secondContender = null;
 
-            while (await EntitySet.AnyAsync())
+            while (true)
             {
                 var contenders = await EntitySet?
                 .OrderBy(x => Guid.NewGuid())
