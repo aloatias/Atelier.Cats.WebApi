@@ -5,6 +5,7 @@ using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
 using Atelier.Cats.Domain.Services;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,18 +26,7 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
         {
-            // Check conflict
-            var challengeExists = await _unitOfWork.ChallengeRepository
-                .ExistsAsync(x =>
-                    x.WinnerId == challenge.WinnerId && x.LoserId == challenge.LoserId
-                    || x.WinnerId == challenge.LoserId && x.LoserId == challenge.WinnerId);
-
-            if (challengeExists)
-            {
-                throw new ConflictException("These cats have already faced each other");
-            }
-
-            // Check existence
+            // Check cats existence
             var contenderOneExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.WinnerId);
             var contenderTwoExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.LoserId);
 
@@ -56,6 +46,18 @@ namespace Atelier.Cats.Application.Services
                 || !contenderTwoExists)
             {
                 throw new BadRequestException(sb.ToString());
+            }
+
+            // Check challenge conflict
+            var contenders = new Guid[] { challenge.WinnerId, challenge.LoserId };
+
+            var existingChallenge = await _unitOfWork.ChallengeRepository
+                .ExistsAsync(x => contenders.Contains(x.WinnerId)
+                    && contenders.Contains(x.LoserId));
+
+            if (existingChallenge)
+            {
+                throw new ConflictException("These cats have already faced each other");
             }
 
             var challengeToCreate = new Challenge
