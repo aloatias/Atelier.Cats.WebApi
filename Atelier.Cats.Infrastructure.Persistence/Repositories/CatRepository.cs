@@ -27,23 +27,26 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             Cat firstContender = null;
             Cat secondContender = null;
 
-            while (true)
+            if (await EntitySet.AnyAsync())
             {
-                var contenders = await EntitySet?
-                .OrderBy(x => Guid.NewGuid())
-                .Take(2)
-                .ToArrayAsync();
-
-                var existingChallenge = await _context.Set<Challenge>()
-                    .AnyAsync(x => contenders.Contains(x.Winner) 
-                        && contenders.Contains(x.Loser));
-
-                if (!existingChallenge)
+                while (true)
                 {
-                    firstContender = contenders[0];
-                    secondContender = contenders[1];
+                    var contenders = await EntitySet?
+                    .OrderBy(x => Guid.NewGuid())
+                    .Take(2)
+                    .ToArrayAsync();
 
-                    break;
+                    var existingChallenge = await _context.Set<Challenge>()
+                        .AnyAsync(x => contenders.Contains(x.Winner)
+                            && contenders.Contains(x.Loser));
+
+                    if (!existingChallenge)
+                    {
+                        firstContender = contenders[0];
+                        secondContender = contenders[1];
+
+                        break;
+                    }
                 }
             }
 
