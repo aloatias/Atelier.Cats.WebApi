@@ -2,7 +2,7 @@
 
 namespace Atelier.Cats.Application.Models
 {
-    public class BadRequestException : AtelierExceptionBase
+    public sealed class BadRequestException : AtelierExceptionBase
     {
         public BadRequestException(string errorMessage) : base(errorMessage)
         {

@@ -38,11 +38,10 @@ namespace Atelier.Cats.WebApi.Middleware
             context.Response.StatusCode = (int)exception.HttpStatusCode;
 
             await context.Response.WriteAsync(
-                new ExceptionDetails()
-                {
-                    StatusCode = context.Response.StatusCode,
-                    Message = exception.Message
-                }.ToString());
+                new ExceptionDetails(
+                    context.Response.StatusCode,
+                    exception.Message
+                ).ToString());
         }
     }
 }
