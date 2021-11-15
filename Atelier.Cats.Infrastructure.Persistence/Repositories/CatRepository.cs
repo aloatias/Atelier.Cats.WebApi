@@ -17,9 +17,9 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Cat> FindByAtelierIdAsync(string id)
+        public Task<Cat> FindByAtelierIdAsync(string id)
         {
-            return await EntitySet.FirstOrDefaultAsync(x => x.AtelierId == id);
+            return EntitySet.FirstOrDefaultAsync(x => x.AtelierId == id);
         }
 
         public async Task<Tuple<Cat, Cat>> GetContendersAsync()

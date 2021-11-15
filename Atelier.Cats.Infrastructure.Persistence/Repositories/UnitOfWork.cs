@@ -31,7 +31,7 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             }
             catch
             {
-                //Log Exception Handling message                      
+                // Log Exception Handling message                      
                 await dbContextTransaction.RollbackAsync();
                 throw;
             }
