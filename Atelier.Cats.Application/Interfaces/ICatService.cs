@@ -1,9 +1,9 @@
-﻿using Atelier.Cats.Domain.Dtos;
+﻿using Atelier.Cats.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Atelier.Cats.Domain.Services
+namespace Atelier.Cats.Application.Interfaces
 {
     public interface ICatService
     {

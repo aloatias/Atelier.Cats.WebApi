@@ -1,4 +1,4 @@
-﻿using Atelier.Cats.Domain.Dtos;
+﻿using Atelier.Cats.Application.Dtos;
 using Atelier.Cats.Domain.Entities;
 using Bogus;
 using System;
