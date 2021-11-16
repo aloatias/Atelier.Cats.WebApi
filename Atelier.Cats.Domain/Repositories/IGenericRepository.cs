@@ -75,11 +75,5 @@ namespace Atelier.Cats.Domain.Repositories
         /// </summary>
         /// <param name="entity">The object to save.</param>
         TEntity UpdateAsync(TEntity entity);
-
-        /// <summary>
-        /// This method is used to save a collection of objects.
-        /// </summary>
-        /// <param name="entities">The objects to save.</param>
-        void UpdateAsync(IEnumerable<TEntity> entities, IDictionary<string, object> parameters = null);
     }
 }
