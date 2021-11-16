@@ -39,18 +39,6 @@ namespace Atelier.Cats.Domain.Repositories
         Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> criteria);
 
         /// <summary>
-        /// This method is used to save an object.
-        /// </summary>
-        /// <param name="entity">The object to save.</param>
-        TEntity UpdateAsync(TEntity entity);
-
-        /// <summary>
-        /// This method is used to save a collection of objects.
-        /// </summary>
-        /// <param name="entities">The objects to save.</param>
-        void UpdateAsync(IEnumerable<TEntity> entities, IDictionary<string, object> parameters = null);
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="id"></param>
@@ -81,5 +69,11 @@ namespace Atelier.Cats.Domain.Repositories
         /// </summary>
         /// <param name="entities">Objects to delete.</param>
         void Remove(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        /// This method is used to save an object.
+        /// </summary>
+        /// <param name="entity">The object to save.</param>
+        TEntity UpdateAsync(TEntity entity);
     }
 }

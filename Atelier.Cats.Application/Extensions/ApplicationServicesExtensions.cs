@@ -1,6 +1,6 @@
 ﻿using Atelier.Cats.Application.Common;
+using Atelier.Cats.Application.Interfaces;
 using Atelier.Cats.Application.Services;
-using Atelier.Cats.Domain.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Atelier.Cats.Application

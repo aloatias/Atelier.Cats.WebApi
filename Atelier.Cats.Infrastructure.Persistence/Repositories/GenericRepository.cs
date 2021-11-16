@@ -22,19 +22,19 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             return (await EntitySet.AddAsync(entity)).Entity;
         }
 
-        public async Task AddAsync(IEnumerable<TEntity> entities)
+        public Task AddAsync(IEnumerable<TEntity> entities)
         {
-            await EntitySet.AddRangeAsync(entities);
+            return EntitySet.AddRangeAsync(entities);
         }
 
-        public async Task<int> CountAsync()
+        public Task<int> CountAsync()
         {
-            return await EntitySet.CountAsync();
+            return EntitySet.CountAsync();
         }
 
-        public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> criteria)
+        public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> criteria)
         {
-            return await EntitySet.AnyAsync(criteria);
+            return EntitySet.AnyAsync(criteria);
         }
 
         public async Task<TEntity> FindAsync(Guid id)
@@ -42,9 +42,9 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             return await EntitySet.FindAsync(id);
         }
 
-        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await EntitySet.FirstOrDefaultAsync(predicate);
+            return EntitySet.FirstOrDefaultAsync(predicate);
         }
 
         public async Task Remove(Guid id)
@@ -66,11 +66,6 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
         public TEntity UpdateAsync(TEntity entity)
         {
             return EntitySet.Update(entity).Entity;
-        }
-
-        public void UpdateAsync(IEnumerable<TEntity> entities, IDictionary<string, object> parameters = null)
-        {
-            throw new NotImplementedException();
         }
     }
 }

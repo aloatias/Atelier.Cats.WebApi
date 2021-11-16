@@ -1,4 +1,4 @@
-﻿using Atelier.Cats.Domain.Services;
+﻿using Atelier.Cats.Application.Interfaces;
 using System;
 
 namespace Atelier.Cats.Application.Common

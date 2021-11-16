@@ -20,14 +20,11 @@ namespace Atelier.Cats.Infrastructure.Persistence.Configurations
             builder.Property(x => x.CreationDate).IsRequired();
             builder.Property(x => x.LastUpdate).IsRequired();
 
-            builder.HasMany(x => x.ChallengesAsContenderOne)
-                .WithOne(x => x.ChallengerOne);
-
-            builder.HasMany(x => x.ChallengesAsContenderTwo)
-                .WithOne(x => x.ChallengerTwo);
-
             builder.HasMany(x => x.ChallengesWinner)
                 .WithOne(x => x.Winner);
+
+            builder.HasMany(x => x.ChallengesLoser)
+                .WithOne(x => x.Loser);
         }
     }
 }

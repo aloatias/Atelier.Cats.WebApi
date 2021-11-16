@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.18.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.19.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atelier.Cats.Application\Atelier.Cats.Application.csproj" />
     <ProjectReference Include="..\Atelier.Cats.Infrastructure.Persistence\Atelier.Cats.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\Atelier.Cats.Infrastructure.Presentation\Atelier.Cats.Infrastructure.Presentation.csproj" />
     <ProjectReference Include="..\Atelier.Gateway\Atelier.Gateway.csproj" />
