@@ -1,4 +1,4 @@
-﻿using Atelier.Cats.Domain.Dtos;
+﻿using Atelier.Cats.Application.Dtos;
 using Atelier.Cats.Domain.Entities;
 using Bogus;
 using System;
@@ -50,9 +50,8 @@ namespace Atelier.Cats.Application.Extensions
             return new ChallengeDetailsDto
             {
                 Id = challenge.Id,
-                ChallengerOneId = challenge.ChallengerOneId,
-                ChallengerTwoId = challenge.ChallengerTwoId,
                 WinnerId = challenge.WinnerId,
+                LoserId = challenge.LoserId,
                 VoteDate = challenge.VoteDate
             };
         }

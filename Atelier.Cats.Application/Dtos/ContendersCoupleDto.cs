@@ -1,4 +1,4 @@
-﻿namespace Atelier.Cats.Domain.Dtos
+﻿namespace Atelier.Cats.Application.Dtos
 {
     public class ContendersCoupleDto
     {

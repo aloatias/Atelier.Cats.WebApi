@@ -17,38 +17,30 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Cat> FindByAtelierIdAsync(string id)
-        {
-            return await EntitySet.FirstOrDefaultAsync(x => x.AtelierId == id);
-        }
-
         public async Task<Tuple<Cat, Cat>> GetContendersAsync()
         {
-            Cat firstContender = null;
-            Cat secondContender = null;
+            Cat firstContender = null, secondContender = null;
 
-            while (true && await EntitySet.AnyAsync())
+            if (await EntitySet.AnyAsync())
             {
-                firstContender = await EntitySet
-                .OrderBy(x => Guid.NewGuid())
-                .FirstOrDefaultAsync();
-
-                secondContender = await EntitySet
-                    .Where(x => x.Id != firstContender.Id)
-                    .OrderBy(x => Guid.NewGuid())
-                    .FirstOrDefaultAsync();
-
-                bool existingChallenge = await _context
-                    .Set<Challenge>()
-                    .AnyAsync(x =>
-                    x.ChallengerOneId == firstContender.Id
-                        && x.ChallengerTwoId == secondContender.Id
-                    || x.ChallengerTwoId == firstContender.Id
-                        && x.ChallengerOneId == firstContender.Id);
-
-                if (!existingChallenge)
+                while (true)
                 {
-                    break;
+                    var contenders = await EntitySet?
+                        .OrderBy(x => Guid.NewGuid())
+                        .Take(2)
+                        .ToArrayAsync();
+
+                    var existingChallenge = await _context.Set<Challenge>()
+                        .AnyAsync(x => contenders.Contains(x.Winner)
+                            && contenders.Contains(x.Loser));
+
+                    if (!existingChallenge)
+                    {
+                        firstContender = contenders[0];
+                        secondContender = contenders[1];
+
+                        break;
+                    }
                 }
             }
 

@@ -1,9 +1,9 @@
-﻿using Atelier.Cats.Application.Extensions;
+﻿using Atelier.Cats.Application.Dtos;
+using Atelier.Cats.Application.Extensions;
+using Atelier.Cats.Application.Interfaces;
 using Atelier.Cats.Application.Models;
-using Atelier.Cats.Domain.Dtos;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
-using Atelier.Cats.Domain.Services;
 using Atelier.Gateway.Interfaces;
 using Bogus;
 using System;
