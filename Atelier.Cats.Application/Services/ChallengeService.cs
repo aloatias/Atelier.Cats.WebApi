@@ -79,6 +79,11 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<ChallengeDetailsDto> FindAsync(Guid id)
         {
+            if (id.Equals(Guid.Empty))
+            {
+                throw new BadRequestException("The searched id cannot be empty");
+            }
+
             var challenge = await _unitOfWork.ChallengeRepository.FindAsync(id);
             if (challenge is null)
             {

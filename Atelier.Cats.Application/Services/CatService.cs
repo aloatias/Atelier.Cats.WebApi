@@ -32,6 +32,11 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<CatDetailsDto> FindAsync(Guid id)
         {
+            if (id.Equals(Guid.Empty))
+            {
+                throw new BadRequestException("The searched id cannot be empty");
+            }
+
             var cat = await _unitOfWork.CatRepository.FindAsync(id);
             if (cat is null)
             {
@@ -43,6 +48,11 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<CatDetailsDto> FindAsync(string atelierId)
         {
+            if (string.IsNullOrWhiteSpace(atelierId))
+            {
+                throw new BadRequestException("The searched id cannot be empty");
+            }
+
             var cat = await _unitOfWork.CatRepository.FindAsync(x => x.AtelierId == atelierId);
             if (cat is null)
             {
