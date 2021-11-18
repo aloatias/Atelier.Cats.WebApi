@@ -6,7 +6,7 @@ namespace Atelier.Cats.Application.Interfaces
 {
     public interface IChallengeService
     {
-        Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge);
+        Task<Guid> AddAsync(ChallengeCreationDto challenge);
         Task<int> CountAsync();
         Task<ChallengeDetailsDto> FindAsync(Guid id);
     }

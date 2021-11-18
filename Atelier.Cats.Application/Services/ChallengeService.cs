@@ -27,7 +27,7 @@ namespace Atelier.Cats.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
+        public async Task<Guid> AddAsync(ChallengeCreationDto challenge)
         {
             // Check cats existence
             var contenderOneExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.WinnerId);
@@ -69,7 +69,7 @@ namespace Atelier.Cats.Application.Services
             var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challengeToCreate);
             await _unitOfWork.CommitAsync();
 
-            return _mapper.Map<ChallengeDetailsDto>(createdChallenge);
+            return createdChallenge.Id;
         }
 
         public Task<int> CountAsync()

@@ -33,9 +33,9 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> AddAsync(ChallengeCreationDto challengeResult)
         {
-            var createdChallenge = await _challengeService.AddAsync(challengeResult);
+            var createdChallengeId = await _challengeService.AddAsync(challengeResult);
 
-            return Created(nameof(GetAsync), new { id = createdChallenge.Id });
+            return Created(nameof(GetAsync), new { id = createdChallengeId });
         }
 
         /// <summary>
