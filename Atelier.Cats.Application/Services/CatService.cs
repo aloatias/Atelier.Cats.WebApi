@@ -14,18 +14,18 @@ namespace Atelier.Cats.Application.Services
     public class CatService : ICatService
     {
         private readonly IAtelierCatsGateway _gateway;
-        private readonly IDateProvider _dateGenerator;
+        private readonly IDateProvider _dateProvider;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public CatService(
             IAtelierCatsGateway gateway,
-            IDateProvider dateGenerator,
+            IDateProvider dateProvider,
             IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _gateway = gateway;
-            _dateGenerator = dateGenerator;
+            _dateProvider = dateProvider;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -76,7 +76,7 @@ namespace Atelier.Cats.Application.Services
             var catsToAdd = new List<Cat>();
             foreach (var cat in catsCatalog)
             {
-                var currentDate = _dateGenerator.GetDate();
+                var currentDate = _dateProvider.GetDate();
                 catsToAdd.Add(new Cat { AtelierId = cat.AtelierId, Url = cat.Url, CreationDate = currentDate, LastUpdate = currentDate });
             }
 
