@@ -35,7 +35,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         {
             var createdChallenge = await _challengeService.AddAsync(challengeResult);
 
-            return Created("", new { id = createdChallenge.Id });
+            return Created(nameof(GetAsync), new { id = createdChallenge.Id });
         }
 
         /// <summary>

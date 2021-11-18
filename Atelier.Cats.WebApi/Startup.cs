@@ -1,4 +1,5 @@
 using Atelier.Cats.Application;
+using Atelier.Cats.Application.MappingProfiles;
 using Atelier.Cats.Infrastructure.Persistence.Extensions;
 using Atelier.Cats.Infrastructure.Presentation;
 using Atelier.Cats.WebApi.Middleware;
@@ -29,8 +30,12 @@ namespace Atelier.Cats.WebApi
         {
             services.AddLogging();
 
+            // Automapper
+            services.AddAutoMapper(typeof(IMappingProfile));
+            
+            // Infrastructure.Presentation
             services.AddControllers()
-                .AddApplicationPart(typeof(AssemblyReference).Assembly);
+                .AddApplicationPart(typeof(IInfrastructurePresentation).Assembly);
 
             services.AddCors(opt =>
             {

@@ -1,9 +1,9 @@
 ﻿using Atelier.Cats.Application.Dtos;
-using Atelier.Cats.Application.Extensions;
 using Atelier.Cats.Application.Interfaces;
 using Atelier.Cats.Application.Models;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
+using AutoMapper;
 using System;
 using System.Linq;
 using System.Text;
@@ -14,14 +14,17 @@ namespace Atelier.Cats.Application.Services
     public class ChallengeService : IChallengeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IDateGenerator _dateGenerator;
+        private readonly IDateProvider _dateProvider;
+        private readonly IMapper _mapper;
 
         public ChallengeService(
             IUnitOfWork unitOfWork,
-            IDateGenerator dateGenerator)
+            IDateProvider dateProvider,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _dateGenerator = dateGenerator;
+            _dateProvider = dateProvider;
+            _mapper = mapper;
         }
 
         public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
@@ -60,17 +63,13 @@ namespace Atelier.Cats.Application.Services
                 throw new ConflictException("These cats have already faced each other");
             }
 
-            var challengeToCreate = new Challenge
-            {
-                WinnerId = challenge.WinnerId,
-                LoserId = challenge.LoserId,
-                VoteDate = _dateGenerator.GetDate()
-            };
+            var challengeToCreate = _mapper.Map<Challenge>(challenge);
+            challengeToCreate.VoteDate = _dateProvider.GetDate();
 
             var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challengeToCreate);
             await _unitOfWork.CommitAsync();
 
-            return createdChallenge.AsDto();
+            return _mapper.Map<ChallengeDetailsDto>(createdChallenge);
         }
 
         public Task<int> CountAsync()
@@ -86,7 +85,7 @@ namespace Atelier.Cats.Application.Services
                 throw new NotFoundException("The searched challenge wasn't found");
             }
 
-            return challenge.AsDto();
+            return _mapper.Map<ChallengeDetailsDto>(challenge);
         }
     }
 }

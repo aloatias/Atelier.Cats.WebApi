@@ -11,7 +11,7 @@ namespace Atelier.Cats.Application
         {
             services.AddScoped<ICatService, CatService>();
             services.AddScoped<IChallengeService, ChallengeService>();
-            services.AddScoped<IDateGenerator, DateGenerator>();
+            services.AddScoped<IDateProvider, DateProvider>();
         }
     }
 }
