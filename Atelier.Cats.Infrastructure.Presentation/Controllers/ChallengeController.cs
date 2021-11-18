@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Atelier.Cats.Infrastructure.Presentation.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ChallengeController : AtelierControllerBase<ChallengeController>
     {
         private readonly IChallengeService _challengeService;
@@ -43,8 +43,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("{id}")]
-        [HttpGet]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,8 +56,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
         ///
         /// </summary>
         /// <returns></returns>
-        [Route("total-votes")]
-        [HttpGet]
+        [HttpGet("total-votes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetTotalVotesAsync()
