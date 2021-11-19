@@ -29,6 +29,13 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<Guid> AddAsync(ChallengeCreationDto challenge)
         {
+            // Check ids aren't empty
+            if(challenge.WinnerId.Equals(Guid.Empty)
+                || challenge.LoserId.Equals(Guid.Empty))
+            {
+                throw new BadRequestException("The ids cannont be empty");
+            }
+
             // Check cats existence
             var contenderOneExists = await _unitOfWork.CatRepository.AnyAsync(x => x.Id == challenge.WinnerId);
             var contenderTwoExists = await _unitOfWork.CatRepository.AnyAsync(x => x.Id == challenge.LoserId);
