@@ -10,22 +10,18 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ChallengeController : AtelierControllerBase<ChallengeController>
+    public class ChallengesController : AtelierControllerBase<ChallengesController>
     {
         private readonly IChallengeService _challengeService;
 
-        public ChallengeController(
-            ILogger<ChallengeController> logger,
+        public ChallengesController(
+            ILogger<ChallengesController> logger,
             IChallengeService challengeService) : base(logger)
         {
             _challengeService = challengeService;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="challengeResult"></param>
-        /// <returns></returns>
+        // POST /challenge
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -38,11 +34,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             return Created(nameof(GetAsync), new { id = createdChallengeId });
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        // GET /challenge/{id}
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,10 +44,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             return Ok(await _challengeService.FindAsync(id));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
+        // GET /challenge/total-votes
         [HttpGet("total-votes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

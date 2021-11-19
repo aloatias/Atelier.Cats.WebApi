@@ -11,23 +11,19 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CatController : AtelierControllerBase<CatController>
+    public class CatsController : AtelierControllerBase<CatsController>
     {
         private readonly ICatService _catService;
 
-        public CatController(
-            ILogger<CatController> logger,
+        public CatsController(
+            ILogger<CatsController> logger,
             ICatService catService) : base(logger)
         {
             _catService = catService;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
+        // GET /cats/{id}
+        [HttpGet("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -36,24 +32,17 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             return Ok(await _catService.FindAsync(id));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("atelier/{id}")]
+        // GET /cats/{atelierId}
+        [HttpGet("{atelierId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CatDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetByAtelierIdAsync(string id)
+        public async Task<IActionResult> GetByAtelierIdAsync(string atelierId)
         {
-            return Ok(await _catService.FindAsync(id));
+            return Ok(await _catService.FindAsync(atelierId));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        // GET /cats/contenders
         [HttpGet("contenders")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ContendersCoupleDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,10 +52,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             return Ok(await _catService.GetContendersAsync());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        // GET /cats/winners
         [HttpGet("winners")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CatDetailsDto>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -75,10 +61,7 @@ namespace Atelier.Cats.Infrastructure.Presentation.Controllers
             return Ok(await _catService.GetWinnersAsync());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        // GET /cats/catalog
         [HttpGet("catalog")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
