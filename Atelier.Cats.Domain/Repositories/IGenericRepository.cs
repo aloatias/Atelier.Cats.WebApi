@@ -36,7 +36,7 @@ namespace Atelier.Cats.Domain.Repositories
         /// </summary>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> criteria);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> criteria);
 
         /// <summary>
         /// 

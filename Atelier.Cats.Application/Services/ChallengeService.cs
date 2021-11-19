@@ -1,9 +1,9 @@
 ﻿using Atelier.Cats.Application.Dtos;
-using Atelier.Cats.Application.Extensions;
 using Atelier.Cats.Application.Interfaces;
 using Atelier.Cats.Application.Models;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
+using AutoMapper;
 using System;
 using System.Linq;
 using System.Text;
@@ -14,21 +14,31 @@ namespace Atelier.Cats.Application.Services
     public class ChallengeService : IChallengeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IDateGenerator _dateGenerator;
+        private readonly IDateProvider _dateProvider;
+        private readonly IMapper _mapper;
 
         public ChallengeService(
             IUnitOfWork unitOfWork,
-            IDateGenerator dateGenerator)
+            IDateProvider dateProvider,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _dateGenerator = dateGenerator;
+            _dateProvider = dateProvider;
+            _mapper = mapper;
         }
 
-        public async Task<ChallengeDetailsDto> AddAsync(ChallengeCreationDto challenge)
+        public async Task<Guid> AddAsync(ChallengeCreationDto challenge)
         {
+            // Check ids aren't empty
+            if(challenge.WinnerId.Equals(Guid.Empty)
+                || challenge.LoserId.Equals(Guid.Empty))
+            {
+                throw new BadRequestException("The ids cannont be empty");
+            }
+
             // Check cats existence
-            var contenderOneExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.WinnerId);
-            var contenderTwoExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.LoserId);
+            var contenderOneExists = await _unitOfWork.CatRepository.AnyAsync(x => x.Id == challenge.WinnerId);
+            var contenderTwoExists = await _unitOfWork.CatRepository.AnyAsync(x => x.Id == challenge.LoserId);
 
             var sb = new StringBuilder();
 
@@ -52,7 +62,7 @@ namespace Atelier.Cats.Application.Services
             var contenders = new Guid[] { challenge.WinnerId, challenge.LoserId };
 
             var existingChallenge = await _unitOfWork.ChallengeRepository
-                .ExistsAsync(x => contenders.Contains(x.WinnerId)
+                .AnyAsync(x => contenders.Contains(x.WinnerId)
                     && contenders.Contains(x.LoserId));
 
             if (existingChallenge)
@@ -60,17 +70,13 @@ namespace Atelier.Cats.Application.Services
                 throw new ConflictException("These cats have already faced each other");
             }
 
-            var challengeToCreate = new Challenge
-            {
-                WinnerId = challenge.WinnerId,
-                LoserId = challenge.LoserId,
-                VoteDate = _dateGenerator.GetDate()
-            };
+            var challengeToCreate = _mapper.Map<Challenge>(challenge);
+            challengeToCreate.VoteDate = _dateProvider.GetDate();
 
             var createdChallenge = await _unitOfWork.ChallengeRepository.AddAsync(challengeToCreate);
             await _unitOfWork.CommitAsync();
 
-            return createdChallenge.AsDto();
+            return createdChallenge.Id;
         }
 
         public Task<int> CountAsync()
@@ -80,13 +86,18 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<ChallengeDetailsDto> FindAsync(Guid id)
         {
+            if (id.Equals(Guid.Empty))
+            {
+                throw new BadRequestException("The searched id cannot be empty");
+            }
+
             var challenge = await _unitOfWork.ChallengeRepository.FindAsync(id);
             if (challenge is null)
             {
                 throw new NotFoundException("The searched challenge wasn't found");
             }
 
-            return challenge.AsDto();
+            return _mapper.Map<ChallengeDetailsDto>(challenge);
         }
     }
 }

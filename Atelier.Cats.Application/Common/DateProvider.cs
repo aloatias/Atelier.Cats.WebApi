@@ -3,7 +3,7 @@ using System;
 
 namespace Atelier.Cats.Application.Common
 {
-    public class DateGenerator : IDateGenerator
+    public class DateProvider : IDateProvider
     {
         public DateTime GetDate() => DateTime.Now;
     }
