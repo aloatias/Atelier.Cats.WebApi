@@ -30,8 +30,8 @@ namespace Atelier.Cats.Application.Services
         public async Task<Guid> AddAsync(ChallengeCreationDto challenge)
         {
             // Check cats existence
-            var contenderOneExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.WinnerId);
-            var contenderTwoExists = await _unitOfWork.CatRepository.ExistsAsync(x => x.Id == challenge.LoserId);
+            var contenderOneExists = await _unitOfWork.CatRepository.AnyAsync(x => x.Id == challenge.WinnerId);
+            var contenderTwoExists = await _unitOfWork.CatRepository.AnyAsync(x => x.Id == challenge.LoserId);
 
             var sb = new StringBuilder();
 
@@ -55,7 +55,7 @@ namespace Atelier.Cats.Application.Services
             var contenders = new Guid[] { challenge.WinnerId, challenge.LoserId };
 
             var existingChallenge = await _unitOfWork.ChallengeRepository
-                .ExistsAsync(x => contenders.Contains(x.WinnerId)
+                .AnyAsync(x => contenders.Contains(x.WinnerId)
                     && contenders.Contains(x.LoserId));
 
             if (existingChallenge)
