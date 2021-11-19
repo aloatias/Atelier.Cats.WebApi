@@ -29,6 +29,12 @@ namespace Atelier.Cats.Application.Services
 
         public async Task<Guid> AddAsync(ChallengeCreationDto challenge)
         {
+            // Check ids aren't equal
+            if (challenge.WinnerId == challenge.LoserId)
+            {
+                throw new BadRequestException("The ids must be different");
+            }
+
             // Check ids aren't empty
             if(challenge.WinnerId.Equals(Guid.Empty)
                 || challenge.LoserId.Equals(Guid.Empty))

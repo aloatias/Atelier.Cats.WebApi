@@ -4,9 +4,9 @@ namespace Atelier.Cats.Application.Dtos
 {
     public class ChallengeDetailsDto
     {
-        public Guid Id { get; set; }
-        public Guid WinnerId { get; set; }
-        public Guid LoserId { get; set; }
-        public DateTime VoteDate { get; set; }
+        public Guid Id { get; init; }
+        public Guid WinnerId { get; init; }
+        public Guid LoserId { get; init; }
+        public DateTime VoteDate { get; init; }
     }
 }

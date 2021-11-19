@@ -2,7 +2,7 @@
 {
     public class ContendersCoupleDto
     {
-        public ContenderDto ContenderOne { get; set; }
-        public ContenderDto ContenderTwo { get; set; }
+        public ContenderDto ContenderOne { get; init; }
+        public ContenderDto ContenderTwo { get; init; }
     }
 }
