@@ -81,13 +81,17 @@ namespace Atelier.Cats.Application.Services
 
         public async Task ImportCatsCatalogAsync()
         {
-            var catsCatalog = await _gateway.GetCatsCatalogAsync();
+            var atelierCatsCatalog = await _gateway.GetCatsCatalogAsync();
 
             var catsToAdd = new List<Cat>();
-            foreach (var cat in catsCatalog)
+            foreach (var atelierCat in atelierCatsCatalog)
             {
                 var currentDate = _dateProvider.GetDate();
-                catsToAdd.Add(new Cat { AtelierId = cat.AtelierId, Url = cat.Url, CreationDate = currentDate, LastUpdate = currentDate });
+                var catToAdd = _mapper.Map<Cat>(atelierCat);
+                catToAdd.CreationDate = currentDate;
+                catToAdd.LastUpdate = currentDate;
+                
+                catsToAdd.Add(catToAdd);
             }
 
             await _unitOfWork.CatRepository.AddAsync(catsToAdd);

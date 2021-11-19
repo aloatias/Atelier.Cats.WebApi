@@ -1,5 +1,6 @@
 ﻿using Atelier.Cats.Application.Dtos;
 using Atelier.Cats.Domain.Entities;
+using Atelier.Gateway.Dtos;
 using AutoMapper;
 using Bogus;
 using System;
@@ -23,6 +24,8 @@ namespace Atelier.Cats.Application.MappingProfiles
             CreateMap<Cat, WinnerDto>()
                 .AfterMap((_, y) => y.Name = new Faker().Name.FirstName())
                 .AfterMap((x, y) => y.Votes = x.ChallengesWinner?.Count() ?? 0);
+
+            CreateMap<AtelierCatDto, Cat>();
         }
     }
 }
