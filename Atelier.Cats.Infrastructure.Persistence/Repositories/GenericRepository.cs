@@ -32,7 +32,7 @@ namespace Atelier.Cats.Infrastructure.Persistence.Repositories
             return EntitySet.CountAsync();
         }
 
-        public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> criteria)
+        public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> criteria)
         {
             return EntitySet.AnyAsync(criteria);
         }

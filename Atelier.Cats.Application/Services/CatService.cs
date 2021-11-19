@@ -1,14 +1,12 @@
 ﻿using Atelier.Cats.Application.Dtos;
-using Atelier.Cats.Application.Extensions;
 using Atelier.Cats.Application.Interfaces;
 using Atelier.Cats.Application.Models;
 using Atelier.Cats.Domain.Entities;
 using Atelier.Cats.Domain.Repositories;
 using Atelier.Gateway.Interfaces;
-using Bogus;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Atelier.Cats.Application.Services
@@ -16,39 +14,52 @@ namespace Atelier.Cats.Application.Services
     public class CatService : ICatService
     {
         private readonly IAtelierCatsGateway _gateway;
-        private readonly IDateGenerator _dateGeneratorService;
+        private readonly IDateProvider _dateProvider;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         public CatService(
             IAtelierCatsGateway gateway,
-            IDateGenerator dateGeneratorService,
-            IUnitOfWork unitOfWork)
+            IDateProvider dateProvider,
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             _gateway = gateway;
-            _dateGeneratorService = dateGeneratorService;
+            _dateProvider = dateProvider;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<CatDetailsDto> FindAsync(Guid id)
         {
+            if (id.Equals(Guid.Empty))
+            {
+                throw new BadRequestException("The searched id cannot be empty");
+            }
+
             var cat = await _unitOfWork.CatRepository.FindAsync(id);
             if (cat is null)
             {
                 throw new NotFoundException("The searched cat wasn't found");
             }
 
-            return cat.AsDto();
+            return _mapper.Map<CatDetailsDto>(cat);
         }
 
         public async Task<CatDetailsDto> FindAsync(string atelierId)
         {
+            if (string.IsNullOrWhiteSpace(atelierId))
+            {
+                throw new BadRequestException("The searched id cannot be empty");
+            }
+
             var cat = await _unitOfWork.CatRepository.FindAsync(x => x.AtelierId == atelierId);
             if (cat is null)
             {
                 throw new NotFoundException("The searched cat wasn't found");
             }
 
-            return cat.AsDto();
+            return _mapper.Map<CatDetailsDto>(cat);
         }
 
         public async Task<ContendersCoupleDto> GetContendersAsync()
@@ -60,32 +71,27 @@ namespace Atelier.Cats.Application.Services
                 throw new NotFoundException("Not enough contenders where found");
             }
 
-            return contendersCouple.AsDto();
+            return _mapper.Map<ContendersCoupleDto>(contendersCouple);
         }
 
         public async Task<IEnumerable<WinnerDto>> GetWinnersAsync()
         {
-            var faker = new Faker();
-
-            return (await _unitOfWork.CatRepository.GetWinnersAsync())
-                .Select(cat =>
-                    new WinnerDto
-                    {
-                        Name = faker.Name.FirstName(),
-                        Url = cat.Url,
-                        Votes = cat.ChallengesWinner?.Count() ?? 0
-                    });
+            return _mapper.Map<IEnumerable<WinnerDto>>(await _unitOfWork.CatRepository.GetWinnersAsync());
         }
 
         public async Task ImportCatsCatalogAsync()
         {
-            var catsCatalog = await _gateway.GetCatsCatalogAsync();
+            var atelierCatsCatalog = await _gateway.GetCatsCatalogAsync();
 
             var catsToAdd = new List<Cat>();
-            foreach (var cat in catsCatalog)
+            foreach (var atelierCat in atelierCatsCatalog)
             {
-                var currentDate = _dateGeneratorService.GetDate();
-                catsToAdd.Add(new Cat { AtelierId = cat.AtelierId, Url = cat.Url, CreationDate = currentDate, LastUpdate = currentDate });
+                var currentDate = _dateProvider.GetDate();
+                var catToAdd = _mapper.Map<Cat>(atelierCat);
+                catToAdd.CreationDate = currentDate;
+                catToAdd.LastUpdate = currentDate;
+                
+                catsToAdd.Add(catToAdd);
             }
 
             await _unitOfWork.CatRepository.AddAsync(catsToAdd);
