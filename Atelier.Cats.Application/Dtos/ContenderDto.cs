@@ -4,9 +4,9 @@ namespace Atelier.Cats.Application.Dtos
 {
     public class ContenderDto
     {
-        public Guid Id { get; set; }
-        public string AtelierId { get; set; }
+        public Guid Id { get; init; }
+        public string AtelierId { get; init; }
         public string Name { get; set; }
-        public string Url { get; set; }
+        public string Url { get; init; }
     }
 }
